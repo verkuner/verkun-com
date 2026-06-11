@@ -114,7 +114,7 @@ export default function CareersPage() {
                   </div>
                 </div>
                 <a
-                  href={`mailto:hr@fankun-ai.com?subject=${encodeURIComponent(
+                  href={`mailto:hr@verkun.com?subject=${encodeURIComponent(
                     j.title[lang]
                   )}`}
                   className="shrink-0 rounded-full border border-white/15 px-6 py-2.5 text-sm font-semibold text-white/90 transition-colors hover:bg-white/5"

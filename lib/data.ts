@@ -14,13 +14,13 @@ export type Post = {
 
 export const posts: Post[] = [
   {
-    slug: "fankun-pro-launch",
+    slug: "verkun-pro-launch",
     date: "2026-05-28",
     readTime: 4,
     category: { zh: "产品发布", en: "Product" },
     title: {
       zh: "凡鲲 Pro 大模型正式发布，开启企业智能新纪元",
-      en: "Fankun Pro Model Launches, Ushering in a New Era of Enterprise Intelligence",
+      en: "Verkun Pro Model Launches, Ushering in a New Era of Enterprise Intelligence",
     },
     excerpt: {
       zh: "全新一代千亿参数大模型，在多模态理解、长文本推理与工具调用能力上实现全面突破。",
@@ -29,15 +29,15 @@ export const posts: Post[] = [
     body: [
       {
         zh: "今日，北京凡鲲智能科技有限公司正式发布新一代企业级大模型「凡鲲 Pro」。该模型基于全自研的训练框架与万卡算力集群打造，在多项权威评测中达到行业领先水平。",
-        en: "Today, Beijing Fankun Intelligent Technology officially launched its new enterprise model, Fankun Pro. Built on a fully in-house training framework and a 10,000-GPU cluster, it achieves industry-leading results across multiple authoritative benchmarks.",
+        en: "Today, Beijing Verkun Intelligent Technology officially launched its new enterprise model, Verkun Pro. Built on a fully in-house training framework and a 10,000-GPU cluster, it achieves industry-leading results across multiple authoritative benchmarks.",
       },
       {
         zh: "凡鲲 Pro 支持图文、音频、视频的统一多模态理解，并具备超长上下文窗口与稳定的工具调用能力，能够胜任复杂的企业级智能体任务。",
-        en: "Fankun Pro supports unified multimodal understanding across text, image, audio and video, with an ultra-long context window and reliable tool-calling — ready for complex enterprise agent tasks.",
+        en: "Verkun Pro supports unified multimodal understanding across text, image, audio and video, with an ultra-long context window and reliable tool-calling — ready for complex enterprise agent tasks.",
       },
       {
         zh: "目前，凡鲲 Pro 已开放私有化部署与 API 接入，欢迎各行业客户联系我们获取试用名额。",
-        en: "Fankun Pro is now available for private deployment and API access. Enterprise customers across industries are welcome to contact us for trial access.",
+        en: "Verkun Pro is now available for private deployment and API access. Enterprise customers across industries are welcome to contact us for trial access.",
       },
     ],
   },
@@ -52,12 +52,12 @@ export const posts: Post[] = [
     },
     excerpt: {
       zh: "通过部署凡鲲机器视觉质检系统，客户实现毫秒级缺陷识别，显著降低人力成本。",
-      en: "By deploying Fankun's machine-vision inspection system, our client achieved millisecond defect detection and major labor savings.",
+      en: "By deploying Verkun's machine-vision inspection system, our client achieved millisecond defect detection and major labor savings.",
     },
     body: [
       {
         zh: "某头部电子制造企业面临人工质检效率低、漏检率高的难题。凡鲲智能为其量身打造了基于深度学习的视觉质检方案。",
-        en: "A leading electronics manufacturer struggled with slow, error-prone manual inspection. Fankun built a tailored deep-learning visual inspection solution.",
+        en: "A leading electronics manufacturer struggled with slow, error-prone manual inspection. Verkun built a tailored deep-learning visual inspection solution.",
       },
       {
         zh: "系统上线后，缺陷识别准确率达到 99.2%，单件检测时间缩短至 50 毫秒以内，综合良品率提升 23%。",

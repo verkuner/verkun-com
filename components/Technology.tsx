@@ -45,16 +45,16 @@ export default function Technology() {
               <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
               <span className="h-3 w-3 rounded-full bg-green-400/70" />
               <span className="ml-3 text-xs text-white/40">
-                fankun-ai · inference
+                verkun-ai · inference
               </span>
             </div>
             <pre className="mt-6 overflow-x-auto rounded-xl bg-black/40 p-5 text-[13px] leading-relaxed">
               <code>
                 <span className="text-violet-300">from</span>{" "}
-                <span className="text-sky-300">fankun</span>{" "}
+                <span className="text-sky-300">verkun</span>{" "}
                 <span className="text-violet-300">import</span> AIClient{"\n\n"}
                 client = AIClient(model=
-                <span className="text-emerald-300">&quot;fankun-pro&quot;</span>)
+                <span className="text-emerald-300">&quot;verkun-pro&quot;</span>)
                 {"\n\n"}
                 resp = client.chat(
                 <span className="text-emerald-300">

@@ -41,7 +41,7 @@ export default function Navbar() {
           <span className="flex flex-col leading-tight">
             <span className="text-sm font-bold tracking-wide">凡鲲智能</span>
             <span className="text-[10px] uppercase tracking-[0.25em] text-white/40">
-              FANKUN AI
+              VERKUN AI
             </span>
           </span>
         </Link>
