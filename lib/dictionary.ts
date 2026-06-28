@@ -121,7 +121,7 @@ export const dictionary = {
         { title: "资源", links: ["开发者文档", "API 参考", "案例研究", "技术博客"] },
       ],
       rights: "版权所有",
-      icp: "京 ICP 备 XXXXXXXX 号 · 京公网安备 XXXXXXXXXXXX 号",
+      icp: "京 ICP 备 2021007699 号 · 京公网安备 XXXXXXXXXXXX 号",
     },
     news: {
       eyebrow: "News & Insights",
@@ -273,7 +273,7 @@ export const dictionary = {
         { title: "Resources", links: ["Docs", "API Reference", "Case Studies", "Blog"] },
       ],
       rights: "All rights reserved.",
-      icp: "Beijing ICP No. XXXXXXXX · Public Security No. XXXXXXXXXXXX",
+      icp: "Beijing ICP No. 2021007699 · Public Security No. XXXXXXXXXXXX",
     },
     news: {
       eyebrow: "News & Insights",
