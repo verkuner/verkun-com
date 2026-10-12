@@ -9,7 +9,12 @@ module.exports = {
       cwd: `${__dirname}/v2`,
       script: next,
       args: "start -p 3000",
-      env: { NODE_ENV: "production" },
+      env: {
+        NODE_ENV: "production",
+        // Contact-form mail goes via the local Postfix relay (scripts/setup-mail-relay.sh).
+        MAIL_TO: "contact@verkun.com",
+        MAIL_FROM: "contact@verkun.com",
+      },
     },
     {
       name: "verkun-v1",
