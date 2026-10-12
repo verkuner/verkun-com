@@ -6,7 +6,7 @@ import { yourHealth } from "@/lib/nav";
 import AppDashboardPhone from "@/components/AppDashboardPhone";
 import RingVisual from "@/components/RingVisual";
 import PhoneDemo from "@/components/PhoneDemo";
-import VitalsBoard from "@/components/VitalsBoard";
+import ScoreBoard, { CaloriePair } from "@/components/ScoreBoard";
 import DevicesShowcase from "@/components/DevicesShowcase";
 import ContactSection from "@/components/ContactSection";
 import AppDownload from "@/components/AppDownload";
@@ -184,15 +184,16 @@ function UnderstandChapter() {
         <ChapterHead index={1} dark>
           {tr(
             l(
-              "心率、血氧、睡眠、HRV、体温与活动——了解每个信号的含义，和你自己的常态比较，看清身体正在发生的变化。",
-              "Heart rate, SpO₂, sleep, HRV, temperature and activity — know what each signal means, compare it with your own normal, and see how your body is changing."
+              "不必看懂复杂数据。体能、睡眠、活动、心率四个分数，加上活动消耗和食物摄入两个热量数字，让你每天一眼读懂身体状况，知道今天该怎么调整。",
+              "No complicated data. Four scores — Energy, Sleep, Activity and Heart — plus calories burned and calories eaten show you how your body is doing each day, and what to adjust."
             )
           )}
         </ChapterHead>
-        <div className="mt-12">
-          <VitalsBoard />
+        <div className="mt-12 space-y-4">
+          <ScoreBoard dark />
+          <CaloriePair dark />
         </div>
-        <p className="mt-6 text-xs text-white/35">{tr(l("* 界面数据为示意。", "* Figures shown are illustrative."))}</p>
+        <p className="mt-6 text-xs text-white/35">{tr(l("* 分数为示意。", "* Scores shown are illustrative."))}</p>
       </div>
     </section>
   );
@@ -201,8 +202,8 @@ function UnderstandChapter() {
 function RadarChapter() {
   const { tr } = useLang();
   const features = [
-    { icon: "heart", tone: "bg-heart-soft text-heart", href: "/health-radar#vitals", t: l("体征看板", "Vitals dashboard"), d: l("全部体征一屏总览，日 / 周 / 月趋势随时回看。", "Every vital on one screen, with daily, weekly and monthly trends.") },
-    { icon: "sleep", tone: "bg-sky-soft text-sky", href: "/health-radar#sleep", t: l("睡眠与恢复", "Sleep & recovery"), d: l("睡眠分期与评分，基于 HRV 的每日恢复状态。", "Sleep stages and score, plus daily recovery from HRV.") },
+    { icon: "heart", tone: "bg-heart-soft text-heart", href: "/health-radar#vitals", t: l("今日概览", "Today at a glance"), d: l("体能、睡眠、活动、心率四个分数，打开就能看懂。", "Energy, Sleep, Activity and Heart scores — clear the moment you open it.") },
+    { icon: "sleep", tone: "bg-sky-soft text-sky", href: "/health-radar#sleep", t: l("睡眠与恢复", "Sleep & recovery"), d: l("睡得好不好、恢复得够不够，每天告诉你。", "How well you slept and recovered, every day.") },
     { icon: "camera", tone: "bg-amber-soft text-amber", href: "/health-radar#nutrition", t: l("AI 饮食热量识别", "AI calorie recognition"), d: l("拍照识别菜品与分量，自动计算热量与营养素。", "Snap a photo — dishes, portions, calories and macros, done.") },
     { icon: "target", tone: "bg-teal-soft text-teal-deep", href: "/health-radar#energy", t: l("能量收支", "Energy balance"), d: l("设备测消耗、App 记摄入，实时掌握每日能量缺口。", "Device-measured burn vs. logged intake, live.") },
     { icon: "spark", tone: "bg-mint-soft text-mint", href: "/health-radar#reports", t: l("AI 健康建议与报告", "AI guidance & reports"), d: l("每日建议与周报，帮你把目标变成习惯。", "Daily tips and weekly reports that turn goals into habits.") },

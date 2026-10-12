@@ -5,7 +5,7 @@ import { l, useLang, type L } from "@/lib/i18n";
 import AppDashboardPhone from "@/components/AppDashboardPhone";
 import PhoneDemo from "@/components/PhoneDemo";
 import AppDownload from "@/components/AppDownload";
-import VitalsBoard from "@/components/VitalsBoard";
+import ScoreBoard, { CaloriePair } from "@/components/ScoreBoard";
 import EnergyBalance from "@/components/EnergyBalance";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
@@ -13,7 +13,7 @@ import { useHashScroll } from "@/lib/useHashScroll";
 import ChapterNav from "@/components/ChapterNav";
 
 const sections = [
-  { id: "vitals", label: l("体征看板", "Vitals") },
+  { id: "vitals", label: l("今日概览", "Overview") },
   { id: "sleep", label: l("睡眠与恢复", "Sleep & recovery") },
   { id: "nutrition", label: l("AI 饮食识别", "AI nutrition") },
   { id: "energy", label: l("能量收支", "Energy balance") },
@@ -212,8 +212,8 @@ export default function AppPage() {
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
               {tr(
                 l(
-                  "连接 VERKUN 智能设备，App 持续接收你的心率、血氧、睡眠、HRV 与活动数据；拍照记录饮食，AI 计算热量与营养。所有数据汇聚成一张清晰的健康全景图，并告诉你下一步怎么做。",
-                  "Pair a VERKUN device and the app continuously receives your heart rate, SpO₂, sleep, HRV and activity; snap your meals and AI works out calories and nutrients. It all comes together in one clear picture of your health — with your next step."
+                  "连接 VERKUN 智能设备，健康雷达把身体信号变成体能、睡眠、活动、心率四个分数；戒指自动记录活动消耗，拍照 AI 识别食物摄入的热量。所有数据汇聚成一张清晰的健康全景图，并告诉你下一步怎么做。",
+                  "Pair a VERKUN device and Health Radar turns your body's signals into four scores — Energy, Sleep, Activity and Heart. Your ring tracks calories burned; snap a photo and AI counts calories eaten. It all comes together in one clear picture of your health — with your next step."
                 )
               )}
             </p>
@@ -247,17 +247,18 @@ export default function AppPage() {
         <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <SectionHead
             dark
-            eyebrow={l("体征看板", "Vitals dashboard")}
-            title={l("真实体征，一屏看全", "All your real vitals on one screen")}
+            eyebrow={l("今日概览", "Today at a glance")}
+            title={l("四个分数，两个热量，一屏看全", "Four scores and two calorie figures, on one screen")}
             desc={l(
-              "心率、血氧、睡眠、HRV、皮肤温度与活动，由设备全天候记录，按日、周、月查看趋势。",
-              "Heart rate, SpO₂, sleep, HRV, skin temperature and activity, recorded around the clock by your device — view trends by day, week or month."
+              "体能、睡眠、活动、心率四个分数，加上活动消耗与食物摄入，打开 App 就能看到，并可按日、周、月回看趋势。",
+              "Energy, Sleep, Activity and Heart, plus calories burned and eaten — right there when you open the app, with daily, weekly and monthly trends."
             )}
           />
-          <div className="mt-12">
-            <VitalsBoard />
+          <div className="mt-12 space-y-4">
+            <ScoreBoard dark />
+            <CaloriePair dark />
           </div>
-          <p className="mt-6 text-xs text-white/35">{tr(l("* 界面数据为示意。", "* Figures shown are illustrative."))}</p>
+          <p className="mt-6 text-xs text-white/35">{tr(l("* 数据为示意。", "* Figures shown are illustrative."))}</p>
         </div>
       </section>
 

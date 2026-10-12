@@ -3,32 +3,7 @@
 import { l, useLang } from "@/lib/i18n";
 import Icon from "./Icon";
 import PhoneFrame from "./PhoneFrame";
-
-function ScoreRing({ value }: { value: number }) {
-  const r = 30;
-  const c = 2 * Math.PI * r;
-  return (
-    <svg viewBox="0 0 76 76" className="h-[76px] w-[76px] -rotate-90" aria-hidden>
-      <circle cx="38" cy="38" r={r} fill="none" stroke="#e6eff1" strokeWidth="7" />
-      <circle
-        cx="38"
-        cy="38"
-        r={r}
-        fill="none"
-        stroke="url(#score)"
-        strokeWidth="7"
-        strokeLinecap="round"
-        strokeDasharray={`${(c * value) / 100} ${c}`}
-      />
-      <defs>
-        <linearGradient id="score" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#0fb5a6" />
-          <stop offset="1" stopColor="#2f80ed" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
+import { ScoreGauge, calories, scores } from "./ScoreBoard";
 
 function Spark({ points, color }: { points: number[]; color: string }) {
   const max = Math.max(...points);
@@ -43,21 +18,10 @@ function Spark({ points, color }: { points: number[]; color: string }) {
   );
 }
 
+/** Health Radar "Today" screen: the Energy score up top, then Sleep, Activity and Heart. */
 export default function AppDashboardPhone({ className = "" }: { className?: string }) {
   const { tr } = useLang();
-
-  const vitals = [
-    { icon: "heart", tone: "bg-heart-soft text-heart", k: l("静息心率", "Resting HR"), v: "62", u: "bpm", c: "#ff5d6c", p: [66, 64, 65, 63, 62, 63, 62] },
-    { icon: "o2", tone: "bg-teal-soft text-teal-deep", k: l("夜间血氧", "Night SpO₂"), v: "98", u: "%", c: "#0fb5a6", p: [97, 98, 97, 98, 98, 97, 98] },
-    { icon: "stress", tone: "bg-mint-soft text-mint", k: l("HRV", "HRV"), v: "58", u: "ms", c: "#22b573", p: [49, 52, 55, 51, 56, 57, 58] },
-    { icon: "temp", tone: "bg-amber-soft text-amber", k: l("皮肤温度", "Skin temp"), v: "+0.2", u: "°C", c: "#f5a524", p: [0.1, 0, 0.2, 0.1, 0.3, 0.1, 0.2] },
-  ];
-
-  const sub = [
-    { k: l("睡眠", "Sleep"), v: 88, c: "bg-sky" },
-    { k: l("恢复", "Recovery"), v: 76, c: "bg-mint" },
-    { k: l("活动", "Activity"), v: 84, c: "bg-heart" },
-  ];
+  const [energy, ...rest] = scores;
 
   return (
     <PhoneFrame className={className}>
@@ -74,44 +38,49 @@ export default function AppDashboardPhone({ className = "" }: { className?: stri
         </div>
       </div>
 
-      {/* health score */}
-      <div className="mx-4 rounded-3xl bg-white p-4">
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <ScoreRing value={82} />
-            <span className="absolute inset-0 grid place-items-center text-xl font-extrabold">82</span>
-          </div>
-          <div className="flex-1">
-            <p className="text-[11px] text-muted">{tr(l("今日身体状态", "Today's readiness"))}</p>
-            <p className="text-sm font-bold text-teal-deep">{tr(l("良好 · 适合中等强度运动", "Good · ready for moderate effort"))}</p>
-            <div className="mt-2 space-y-1">
-              {sub.map((s) => (
-                <div key={s.k.en} className="flex items-center gap-2 text-[10px]">
-                  <span className="w-7 text-muted">{tr(s.k)}</span>
-                  <span className="h-1 flex-1 overflow-hidden rounded-full bg-canvas">
-                    <span className={`block h-full rounded-full ${s.c}`} style={{ width: `${s.v}%` }} />
-                  </span>
-                  <span className="w-5 text-right font-semibold tabular-nums">{s.v}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* Energy */}
+      <div className="mx-4 flex items-center gap-4 rounded-3xl bg-white p-4">
+        <ScoreGauge value={energy.value} color={energy.color} size={84} stroke={8} labelClass="text-2xl" />
+        <div>
+          <p className="text-[11px] text-muted">{tr(l("今日体能", "Today's energy"))}</p>
+          <p className="text-base font-extrabold" style={{ color: energy.color }}>
+            {tr(energy.status)}
+          </p>
+          <p className="mt-1 text-[11px] leading-snug text-ink/70">{tr(energy.tip)}</p>
         </div>
       </div>
 
-      {/* vitals */}
-      <div className="mx-4 mt-2 rounded-3xl bg-white px-4 py-2">
-        {vitals.map((v) => (
-          <div key={v.k.en} className="flex items-center gap-3 border-b border-line py-2 last:border-b-0">
-            <span className={`grid h-7 w-7 place-items-center rounded-xl ${v.tone}`}>
-              <Icon name={v.icon} className="h-3.5 w-3.5" />
+      {/* Sleep / Activity / Heart */}
+      <div className="mx-4 mt-2 rounded-3xl bg-white px-4 py-1.5">
+        {rest.map((s) => (
+          <div key={s.key} className="flex items-center gap-3 border-b border-line py-2.5 last:border-b-0">
+            <ScoreGauge value={s.value} color={s.color} size={38} stroke={4} labelClass="text-[11px]" />
+            <span className="flex-1">
+              <span className="block text-xs font-bold">{tr(s.name)}</span>
+              <span className="block text-[10px] font-semibold" style={{ color: s.color }}>
+                {tr(s.status)}
+              </span>
             </span>
-            <span className="flex-1 text-[11px] text-muted">{tr(v.k)}</span>
-            <Spark points={v.p} color={v.c} />
-            <span className="w-14 text-right text-sm font-bold tabular-nums">
-              {v.v}
-              <span className="ml-0.5 text-[10px] font-medium text-muted">{v.u}</span>
-            </span>
+            <Spark points={s.week} color={s.color} />
+          </div>
+        ))}
+      </div>
+
+      {/* calories burned / eaten */}
+      <div className="mx-4 mt-2 grid grid-cols-2 gap-2">
+        {calories.map((c) => (
+          <div key={c.key} className="rounded-2xl bg-white p-2.5">
+            <p className="flex items-center gap-1 text-[10px] text-muted">
+              <Icon name={c.icon} className="h-3 w-3" />
+              {tr(c.name)}
+            </p>
+            <p className="text-base font-extrabold tabular-nums" style={{ color: c.color }}>
+              {c.value.toLocaleString()}
+              <span className="ml-0.5 text-[10px] font-semibold text-muted">kcal</span>
+            </p>
+            <div className="mt-1 h-1 overflow-hidden rounded-full bg-canvas">
+              <div className="h-full rounded-full" style={{ width: `${(c.value / c.goal) * 100}%`, background: c.color }} />
+            </div>
           </div>
         ))}
       </div>
@@ -122,8 +91,8 @@ export default function AppDashboardPhone({ className = "" }: { className?: stri
         <p className="text-[11px] leading-snug text-teal-deep">
           {tr(
             l(
-              "昨晚深睡充足，HRV 高于基线。今天适合 30 分钟有氧；目前能量缺口 650 kcal，晚餐建议 500 kcal 以内。",
-              "Plenty of deep sleep and HRV above baseline — good day for 30 min of cardio. You're 650 kcal under; keep dinner below 500 kcal."
+              "昨晚睡得很好，体能充沛。今天适合 30 分钟有氧；再走 2,000 步就能完成活动目标，晚餐建议 500 kcal 以内。",
+              "You slept well and you're charged up. Good day for 30 min of cardio; 2,000 more steps hits your activity goal — keep dinner under 500 kcal."
             )
           )}
         </p>

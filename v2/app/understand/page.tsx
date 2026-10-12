@@ -2,81 +2,69 @@
 
 import Link from "next/link";
 import { l, useLang } from "@/lib/i18n";
-import VitalsBoard from "@/components/VitalsBoard";
+import { CaloriePair, ScoreGauge, calories, scores, type Score } from "@/components/ScoreBoard";
 import HealthLoop from "@/components/HealthLoop";
+import AppDashboardPhone from "@/components/AppDashboardPhone";
 import ChapterNav from "@/components/ChapterNav";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 
-const vitals = [
-  {
-    icon: "heart",
-    tone: "bg-heart-soft text-heart",
-    name: l("心率与静息心率", "Heart rate & resting HR"),
-    what: l("心脏每分钟跳动的次数。静息心率在安静状态下测得。", "How many times your heart beats per minute; resting HR is measured while you're still."),
-    why: l("静息心率的长期变化，能反映体能、恢复与生活作息的变化。", "Long-term shifts in resting HR reflect changes in fitness, recovery and routine."),
-  },
-  {
-    icon: "o2",
-    tone: "bg-teal-soft text-teal-deep",
-    name: l("血氧饱和度", "Blood oxygen (SpO₂)"),
-    what: l("血液中携带氧气的比例，戒指在夜间持续记录。", "The share of your blood carrying oxygen, recorded by the ring overnight."),
-    why: l("了解睡眠期间的血氧水平，是观察睡眠质量的一个角度。", "Seeing your levels during sleep is one more lens on how well you rest."),
-  },
-  {
-    icon: "sleep",
-    tone: "bg-sky-soft text-sky",
-    name: l("睡眠分期", "Sleep stages"),
-    what: l("把一夜睡眠分为清醒、REM、浅睡与深睡。", "Your night split into awake, REM, light and deep sleep."),
-    why: l("睡多久之外，睡得深不深、规律不规律同样重要。", "Beyond how long — how deep and how regular you sleep matters too."),
-  },
-  {
-    icon: "stress",
-    tone: "bg-mint-soft text-mint",
-    name: l("心率变异性 HRV", "Heart rate variability (HRV)"),
-    what: l("相邻心跳之间时间间隔的细微变化。", "The tiny variations in time between heartbeats."),
-    why: l("HRV 常被用来观察压力与恢复状态：相对自身基线偏高，通常意味着恢复较好。", "Often used to read stress and recovery — higher than your own baseline usually means you've recovered well."),
-  },
-  {
-    icon: "temp",
-    tone: "bg-amber-soft text-amber",
-    name: l("皮肤温度变化", "Skin temperature trend"),
-    what: l("夜间指部皮肤温度相对你个人基线的变化。", "How your overnight finger temperature shifts against your baseline."),
-    why: l("温度趋势可以帮助你察觉作息、环境或身体状态的变化。", "Trends help you notice changes in routine, environment or how you feel."),
-  },
-  {
-    icon: "run",
-    tone: "bg-heart-soft text-heart",
-    name: l("活动与能量消耗", "Activity & energy burn"),
-    what: l("步数、运动时长与身体消耗的能量。", "Steps, workout time and the energy your body burns."),
-    why: l("配合健康雷达的饮食记录，看清每天的能量收支。", "Paired with Health Radar's food log, it shows your daily energy balance."),
-  },
-];
+const DAYS = [l("一", "M"), l("二", "T"), l("三", "W"), l("四", "T"), l("五", "F"), l("六", "S"), l("日", "S")];
 
-// 30 nights of HRV (ms) against a personal baseline band. Illustrative.
-const HRV30 = [52, 55, 50, 48, 53, 56, 58, 54, 51, 47, 45, 49, 53, 55, 57, 56, 52, 50, 54, 58, 60, 57, 55, 53, 51, 54, 57, 59, 58, 61];
-const BAND = { lo: 49, hi: 57 };
-
-function BaselineChart() {
-  const w = 600;
-  const h = 180;
-  const min = 40;
-  const max = 66;
-  const y = (v: number) => h - ((v - min) / (max - min)) * h;
-  const x = (i: number) => (i / (HRV30.length - 1)) * w;
-  const path = HRV30.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
-  const last = HRV30.length - 1;
+function ScoreCard({ s, delay }: { s: Score; delay: number }) {
+  const { tr } = useLang();
+  const delta = s.value - s.week[0];
   return (
-    <svg viewBox={`0 0 ${w} ${h + 10}`} className="h-56 w-full" preserveAspectRatio="none" aria-hidden>
-      <rect x="0" y={y(BAND.hi)} width={w} height={y(BAND.lo) - y(BAND.hi)} fill="#0fb5a6" fillOpacity="0.12" />
-      <line x1="0" x2={w} y1={y(BAND.hi)} y2={y(BAND.hi)} stroke="#0fb5a6" strokeOpacity="0.4" strokeDasharray="4 6" />
-      <line x1="0" x2={w} y1={y(BAND.lo)} y2={y(BAND.lo)} stroke="#0fb5a6" strokeOpacity="0.4" strokeDasharray="4 6" />
-      <path d={path} fill="none" stroke="#2f80ed" strokeWidth="2.5" strokeLinejoin="round" />
-      {HRV30.map((v, i) =>
-        v < BAND.lo ? <circle key={i} cx={x(i)} cy={y(v)} r="5" fill="#f5a524" /> : null
-      )}
-      <circle cx={x(last)} cy={y(HRV30[last])} r="7" fill="#2f80ed" stroke="#fff" strokeWidth="3" />
-    </svg>
+    <Reveal delay={delay}>
+      <article className="card h-full p-7 sm:p-8">
+        <div className="flex items-center gap-5">
+          <ScoreGauge value={s.value} color={s.color} size={104} stroke={10} labelClass="text-3xl" />
+          <div>
+            <p className="flex items-center gap-2 text-2xl font-extrabold">
+              <span className={`grid h-8 w-8 place-items-center rounded-xl ${s.tone}`}>
+                <Icon name={s.icon} className="h-4 w-4" />
+              </span>
+              {tr(s.name)}
+            </p>
+            <p className="mt-1 font-semibold" style={{ color: s.color }}>
+              {tr(s.status)}
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-6 leading-relaxed text-ink/80">{tr(s.what)}</p>
+
+        <div className="mt-5 flex items-start gap-2 rounded-2xl bg-canvas p-4 text-sm">
+          <Icon name="target" className="mt-0.5 h-4 w-4 shrink-0 text-teal-deep" />
+          <span>
+            <span className="font-semibold">{tr(l("今天这样做：", "Today: "))}</span>
+            {tr(s.tip)}
+          </span>
+        </div>
+
+        <div className="mt-6">
+          <div className="flex items-center justify-between text-xs text-muted">
+            <span>{tr(l("近 7 天", "Last 7 days"))}</span>
+            <span className={delta >= 0 ? "font-semibold text-mint" : "font-semibold text-amber"}>
+              {delta >= 0 ? "↑" : "↓"} {Math.abs(delta)} {tr(l("分", "pts"))}
+            </span>
+          </div>
+          <div className="mt-2 flex h-20 gap-2">
+            {s.week.map((v, i) => (
+              <div key={i} className="flex h-full flex-1 flex-col items-center gap-1">
+                <div className="relative w-full flex-1">
+                  <div
+                    className="absolute inset-x-0 bottom-0 rounded-md"
+                    style={{ height: `${v}%`, background: s.color, opacity: i === s.week.length - 1 ? 1 : 0.35 }}
+                  />
+                </div>
+                <span className="text-[10px] text-muted">{tr(DAYS[i])}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </article>
+    </Reveal>
   );
 }
 
@@ -85,8 +73,8 @@ export default function UnderstandPage() {
   return (
     <>
       <section className="hero-glow pt-28 pb-20 sm:pt-32">
-        <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="reveal in-view max-w-4xl">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="reveal in-view">
             <p className="eyebrow">{tr(l("你的健康 · 02", "Your Health · 02"))}</p>
             <h1 className="mt-5 text-[2.6rem] font-extrabold leading-[1.08] tracking-tight sm:text-7xl">
               {tr(l("读懂身体，", "Understand your body."))}
@@ -95,133 +83,176 @@ export default function UnderstandPage() {
                 {tr(l("掌控健康。", "Own your health."))}
               </span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
               {tr(
                 l(
-                  "健康不是一种笼统的感觉，而是一组看得见的真实信号。了解每个指标的含义、你自己的基线和它的变化，你才能真正为自己的健康做决定。",
-                  "Health isn't a vague feeling — it's a set of real signals you can see. Know what each one means, what's normal for you and how it's changing, and you can make your own decisions about your health."
+                  "不必看懂一堆专业数据。健康雷达把戒指全天记录的身体信号，提炼成体能、睡眠、活动、心率四个分数，再加上活动消耗和食物摄入两个热量数字——每天看一眼，就知道身体状况如何、今天该怎么调整。",
+                  "No need to decode a wall of data. Health Radar turns what your ring records into four scores — Energy, Sleep, Activity and Heart — plus two calorie figures: what you burned and what you ate. One glance tells you how your body is doing and what to adjust today."
                 )
               )}
             </p>
           </div>
-        </div>
-      </section>
 
-      {/* what each vital means */}
-      <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
-        <Reveal className="max-w-2xl">
-          <p className="eyebrow">{tr(l("认识你的体征", "Know your vitals"))}</p>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-            {tr(l("每个数字，都在讲述你的身体", "Every number tells you something"))}
-          </h2>
-        </Reveal>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {vitals.map((v, i) => (
-            <Reveal key={v.name.en} delay={(i % 3) * 90}>
-              <div className="card h-full p-7">
-                <span className={`grid h-12 w-12 place-items-center rounded-2xl ${v.tone}`}>
-                  <Icon name={v.icon} className="h-6 w-6" />
-                </span>
-                <h3 className="mt-5 text-lg font-bold">{tr(v.name)}</h3>
-                <dl className="mt-3 space-y-3 text-sm leading-relaxed">
-                  <div>
-                    <dt className="text-xs font-semibold text-muted">{tr(l("它是什么", "What it is"))}</dt>
-                    <dd className="mt-0.5 text-ink/80">{tr(v.what)}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-xs font-semibold text-muted">{tr(l("为什么值得关注", "Why it matters"))}</dt>
-                    <dd className="mt-0.5 text-ink/80">{tr(v.why)}</dd>
-                  </div>
-                </dl>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* personal baseline */}
-      <section className="border-y border-line bg-white py-24">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr]">
-          <Reveal>
-            <p className="eyebrow">{tr(l("个人基线", "Your baseline"))}</p>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              {tr(l("和自己比，", "Compare yourself"))}
-              <br />
-              {tr(l("而不是和别人比", "with yourself — not others"))}
-            </h2>
-            <p className="mt-5 text-muted">
-              {tr(
-                l(
-                  "每个人的身体都不一样。健康雷达用你最近几周的数据建立个人基线，当某个指标偏离你的常态时，你会第一时间看到——这比任何“标准值”都更有意义。",
-                  "Every body is different. Health Radar builds your personal baseline from recent weeks, so when a signal drifts from your normal you see it straight away — far more meaningful than any one-size-fits-all number."
-                )
-              )}
-            </p>
-            <ul className="mt-6 space-y-2 text-sm">
-              {[
-                { c: "bg-teal/25", t: l("你的常态范围", "Your normal range") },
-                { c: "bg-sky", t: l("近 30 天 HRV", "HRV, last 30 days") },
-                { c: "bg-amber", t: l("低于常态的日子", "Days below your normal") },
-              ].map((x) => (
-                <li key={x.t.en} className="flex items-center gap-2 text-muted">
-                  <span className={`h-3 w-3 rounded-full ${x.c}`} />
-                  {tr(x.t)}
-                </li>
+          <Reveal className="card mx-auto w-full max-w-md p-7">
+            <div className="flex items-center justify-between">
+              <p className="font-bold">{tr(l("今日身体状况", "Today's body check"))}</p>
+              <span className="rounded-full bg-mint-soft px-3 py-1 text-xs font-semibold text-mint">{tr(l("整体良好", "Looking good"))}</span>
+            </div>
+            <div className="mt-6 grid grid-cols-2 gap-6">
+              {scores.map((s) => (
+                <div key={s.key} className="flex flex-col items-center">
+                  <ScoreGauge value={s.value} color={s.color} size={112} stroke={10} labelClass="text-3xl" />
+                  <p className="mt-3 font-bold">{tr(s.name)}</p>
+                  <p className="text-xs font-semibold" style={{ color: s.color }}>
+                    {tr(s.status)}
+                  </p>
+                </div>
               ))}
-            </ul>
-          </Reveal>
-          <Reveal delay={120}>
-            <div className="card p-6 sm:p-8">
-              <div className="flex items-center justify-between">
-                <p className="font-bold">{tr(l("HRV · 近 30 天", "HRV · last 30 days"))}</p>
-                <span className="rounded-full bg-teal-soft px-3 py-1 text-xs font-semibold text-teal-deep">
-                  {tr(l(`常态 ${BAND.lo}–${BAND.hi} ms`, `Normal ${BAND.lo}–${BAND.hi} ms`))}
-                </span>
-              </div>
-              <div className="mt-6">
-                <BaselineChart />
-              </div>
-              <p className="mt-4 rounded-2xl bg-canvas p-4 text-sm text-ink/75">
-                {tr(
-                  l(
-                    "第 10–12 天 HRV 低于你的常态，那几天睡眠也偏少；之后随着作息恢复，HRV 回到并超过常态范围。",
-                    "Days 10–12 dipped below your normal alongside short nights; as your routine recovered, HRV returned to — and rose above — your usual range."
-                  )
-                )}
-              </p>
+            </div>
+            <div className="mt-6 grid grid-cols-2 gap-3 border-t border-line pt-5">
+              {calories.map((c) => (
+                <div key={c.key} className="rounded-2xl bg-canvas p-3">
+                  <p className="flex items-center gap-1.5 text-xs text-muted">
+                    <Icon name={c.icon} className="h-3.5 w-3.5" />
+                    {tr(c.name)}
+                  </p>
+                  <p className="mt-1 text-xl font-extrabold tabular-nums" style={{ color: c.color }}>
+                    {c.value.toLocaleString()} <span className="text-xs font-semibold text-muted">kcal</span>
+                  </p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
       </section>
 
-      <HealthLoop />
+      {/* the four scores */}
+      <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
+        <Reveal className="max-w-2xl">
+          <p className="eyebrow">{tr(l("四个分数", "Four scores"))}</p>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+            {tr(l("四个分数，读懂你的身体", "Four scores that explain your body"))}
+          </h2>
+          <p className="mt-4 text-muted">
+            {tr(
+              l(
+                "每个分数满分 100，越高代表状态越好。分数背后是什么数据，交给健康雷达；你只需要知道结果，以及接下来怎么做。",
+                "Each score runs to 100 — higher is better. Health Radar handles the data behind it; you just get the result and what to do next."
+              )
+            )}
+          </p>
+        </Reveal>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {scores.map((s, i) => (
+            <ScoreCard key={s.key} s={s} delay={(i % 2) * 100} />
+          ))}
+        </div>
+        <p className="mt-4 text-xs text-muted">{tr(l("* 分数为示意。", "* Scores shown are illustrative."))}</p>
+      </section>
 
-      <section className="relative overflow-hidden bg-graphite py-24 text-white">
-        <div className="dot-grid absolute inset-0 opacity-50" />
-        <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-          <Reveal className="max-w-2xl">
-            <p className="eyebrow !text-teal">{tr(l("此刻的你", "You, right now"))}</p>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-              {tr(l("所有信号，汇成一张全景图", "All your signals, one clear picture"))}
-            </h2>
-            <p className="mt-4 text-white/60">
-              {tr(l("在健康雷达中，这些体征随时可查，并按日、周、月呈现趋势。", "In Health Radar these vitals are always at hand, with daily, weekly and monthly trends."))}
+      {/* calories burned & eaten */}
+      <section className="border-t border-line bg-white py-24">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <Reveal className="grid gap-6 lg:grid-cols-2 lg:items-end">
+            <div>
+              <p className="eyebrow">{tr(l("两个热量", "Two calorie figures"))}</p>
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+                {tr(l("动了多少，吃了多少，", "What you burned, what you ate —"))}
+                <br />
+                {tr(l("一目了然", "at a glance"))}
+              </h2>
+            </div>
+            <p className="text-muted lg:pb-1">
+              {tr(
+                l(
+                  "活动消耗由戒指自动记录，食物摄入靠拍照 AI 识别。两个数字放在一起，你就知道今天吃得是否合适、还需要动多少。",
+                  "Your ring records the calories you burn; AI photo recognition counts the calories you eat. Side by side, they tell you whether today's eating fits and how much more to move."
+                )
+              )}
             </p>
           </Reveal>
           <div className="mt-12">
-            <VitalsBoard />
+            <CaloriePair detailed />
           </div>
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-            <p className="text-xs text-white/35">{tr(l("* 界面数据为示意。", "* Figures shown are illustrative."))}</p>
-            <Link href="/health-radar" className="inline-flex items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-white hover:bg-teal-deep">
-              {tr(l("认识健康雷达", "Meet Health Radar"))}
+          <Reveal className="mt-6">
+            <Link href="/health-radar#nutrition" className="inline-flex items-center gap-2 font-semibold text-teal-deep hover:underline">
+              {tr(l("看看 AI 如何识别食物热量", "See how AI recognises food calories"))}
               <Icon name="arrow" className="h-4 w-4" />
             </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* compare with yourself */}
+      <section className="border-t border-line py-24">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <Reveal>
+            <p className="eyebrow">{tr(l("和自己比", "Compared with you"))}</p>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+              {tr(l("分数，是按你自己的身体算的", "Scores are measured against your own body"))}
+            </h2>
+            <p className="mt-5 text-muted">
+              {tr(
+                l(
+                  "每个人的身体都不一样。健康雷达会先熟悉你一段时间的常态，再根据你自己的变化打分——所以分数反映的是你本人状态的起伏，而不是和别人比较。",
+                  "Every body is different. Health Radar first learns what's normal for you, then scores how you change — so the numbers reflect your own ups and downs, not a comparison with anyone else."
+                )
+              )}
+            </p>
+          </Reveal>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {[
+              { icon: "sync", t: l("戴上就开始了解你", "Learns you as you wear it"), d: l("佩戴几天后，分数会越来越贴合你的身体。", "After a few days of wear, scores fit your body more and more closely.") },
+              { icon: "chart", t: l("看趋势，不纠结一天", "Trends over single days"), d: l("偶尔一天分数低很正常，持续的变化才值得留意。", "One low day is normal — it's the steady changes worth noticing.") },
+              { icon: "spark", t: l("分数配上建议", "Every score comes with advice"), d: l("每个分数都附带一条简单、可执行的建议。", "Each score comes with one simple thing you can do.") },
+            ].map((x, i) => (
+              <Reveal key={x.t.en} delay={i * 90}>
+                <div className="card h-full p-6">
+                  <Icon name={x.icon} className="h-6 w-6 text-teal-deep" />
+                  <p className="mt-4 font-bold">{tr(x.t)}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{tr(x.d)}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      <ChapterNav current="/understand" />
+      <HealthLoop />
+
+      {/* every morning in the app */}
+      <section className="relative overflow-hidden bg-graphite py-24 text-white">
+        <div className="dot-grid absolute inset-0 opacity-50" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_auto]">
+          <Reveal>
+            <p className="eyebrow !text-teal">{tr(l("每天早上", "Every morning"))}</p>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
+              {tr(l("打开健康雷达，", "Open Health Radar,"))}
+              <br />
+              {tr(l("今天的状态一目了然", "see today at a glance"))}
+            </h2>
+            <p className="mt-5 max-w-xl text-white/60">
+              {tr(
+                l(
+                  "起床后看一眼：体能够不够、昨晚睡得好不好、今天要动多少、心率是否平稳；白天再看看消耗和摄入的热量，安排好这一天。",
+                  "One look when you wake up: how much energy you have, how you slept, how much to move and whether your heart is steady. Through the day, check calories burned and eaten to plan the rest."
+                )
+              )}
+            </p>
+            <Link href="/health-radar" className="mt-8 inline-flex items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-white hover:bg-teal-deep">
+              {tr(l("认识健康雷达", "Meet Health Radar"))}
+              <Icon name="arrow" className="h-4 w-4" />
+            </Link>
+          </Reveal>
+          <Reveal delay={120}>
+            <AppDashboardPhone className="mx-auto" />
+          </Reveal>
+        </div>
+      </section>
+
+      <div className="pt-24">
+        <ChapterNav current="/understand" />
+      </div>
     </>
   );
 }
