@@ -25,7 +25,7 @@ rm -f "$ARCHIVE"
 
 ssh -i "$KEY" "$HOST" "TARGETS='$TARGETS' APP_DIR='$APP_DIR' bash -s" <<'REMOTE'
 set -euo pipefail
-REL="${APP_DIR}.release"
+REL="${APP_DIR}/.release"
 rm -rf "$REL" && mkdir -p "$REL"
 tar xzf /tmp/verkun-release.tar.gz -C "$REL"
 
