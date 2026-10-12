@@ -86,8 +86,8 @@ export default function UnderstandPage() {
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
               {tr(
                 l(
-                  "不必看懂一堆专业数据。健康雷达把戒指全天记录的身体信号，提炼成体能、睡眠、活动、心率四个分数，再加上活动消耗和食物摄入两个热量数字——每天看一眼，就知道身体状况如何、今天该怎么调整。",
-                  "No need to decode a wall of data. Health Radar turns what your ring records into four scores — Energy, Sleep, Activity and Heart — plus two calorie figures: what you burned and what you ate. One glance tells you how your body is doing and what to adjust today."
+                  "不必看懂一堆专业数据。凡鲲 App 把戒指全天记录的身体信号，提炼成体能、睡眠、活动、心率四个分数，再加上活动消耗和食物摄入两个热量数字——每天看一眼，就知道身体状况如何、今天该怎么调整。",
+                  "No need to decode a wall of data. The VERKUN app turns what your ring records into four scores — Readiness, Sleep, Activity and Heart — plus two calorie figures: what you burned and what you ate. One glance tells you how your body is doing and what to adjust today."
                 )
               )}
             </p>
@@ -136,8 +136,8 @@ export default function UnderstandPage() {
           <p className="mt-4 text-muted">
             {tr(
               l(
-                "每个分数满分 100，越高代表状态越好。分数背后是什么数据，交给健康雷达；你只需要知道结果，以及接下来怎么做。",
-                "Each score runs to 100 — higher is better. Health Radar handles the data behind it; you just get the result and what to do next."
+                "每个分数满分 100，越高代表状态越好。分数背后是什么数据，交给凡鲲 App；你只需要知道结果，以及接下来怎么做。",
+                "Each score runs to 100 — higher is better. The VERKUN app handles the data behind it; you just get the result and what to do next."
               )
             )}
           </p>
@@ -194,8 +194,8 @@ export default function UnderstandPage() {
             <p className="mt-5 text-muted">
               {tr(
                 l(
-                  "每个人的身体都不一样。健康雷达会先熟悉你一段时间的常态，再根据你自己的变化打分——所以分数反映的是你本人状态的起伏，而不是和别人比较。",
-                  "Every body is different. Health Radar first learns what's normal for you, then scores how you change — so the numbers reflect your own ups and downs, not a comparison with anyone else."
+                  "每个人的身体都不一样。凡鲲 App 会先熟悉你一段时间的常态，再根据你自己的变化打分——所以分数反映的是你本人状态的起伏，而不是和别人比较。",
+                  "Every body is different. The VERKUN app first learns what's normal for you, then scores how you change — so the numbers reflect your own ups and downs, not a comparison with anyone else."
                 )
               )}
             </p>
@@ -227,7 +227,7 @@ export default function UnderstandPage() {
           <Reveal>
             <p className="eyebrow !text-teal">{tr(l("每天早上", "Every morning"))}</p>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-              {tr(l("打开健康雷达，", "Open Health Radar,"))}
+              {tr(l("打开凡鲲 App，", "Open the VERKUN app,"))}
               <br />
               {tr(l("今天的状态一目了然", "see today at a glance"))}
             </h2>
@@ -235,7 +235,7 @@ export default function UnderstandPage() {
               {tr(
                 l(
                   "起床后看一眼：体能够不够、昨晚睡得好不好、今天要动多少、心率是否平稳；白天再看看消耗和摄入的热量，安排好这一天。",
-                  "One look when you wake up: how much energy you have, how you slept, how much to move and whether your heart is steady. Through the day, check calories burned and eaten to plan the rest."
+                  "One look when you wake up: how ready you are, how you slept, how much to move and whether your heart is steady. Through the day, check calories burned and eaten to plan the rest."
                 )
               )}
             </p>

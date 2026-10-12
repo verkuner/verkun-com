@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { l, useLang, type L } from "@/lib/i18n";
-import AppDashboardPhone from "@/components/AppDashboardPhone";
+import RadarCard from "@/components/HealthRadar";
 import PhoneDemo from "@/components/PhoneDemo";
 import AppDownload from "@/components/AppDownload";
 import ScoreBoard, { CaloriePair } from "@/components/ScoreBoard";
@@ -173,8 +173,8 @@ function Reports() {
         eyebrow={l("建议与报告", "Guidance & reports")}
         title={l("让数据变成习惯", "Turn data into habits")}
         desc={l(
-          "知道数字只是开始。健康雷达用建议、报告和提醒，帮你把健康目标落实到每一天。",
-          "Knowing the numbers is just the start. Health Radar uses guidance, reports and reminders to turn goals into daily habits."
+          "知道数字只是开始。凡鲲 App 用建议、报告和提醒，帮你把健康目标落实到每一天。",
+          "Knowing the numbers is just the start. The VERKUN app uses guidance, reports and reminders to turn goals into daily habits."
         )}
       />
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -212,8 +212,8 @@ export default function AppPage() {
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
               {tr(
                 l(
-                  "连接 VERKUN 智能设备，健康雷达把身体信号变成体能、睡眠、活动、心率四个分数；戒指自动记录活动消耗，拍照 AI 识别食物摄入的热量。所有数据汇聚成一张清晰的健康全景图，并告诉你下一步怎么做。",
-                  "Pair a VERKUN device and Health Radar turns your body's signals into four scores — Energy, Sleep, Activity and Heart. Your ring tracks calories burned; snap a photo and AI counts calories eaten. It all comes together in one clear picture of your health — with your next step."
+                  "健康雷达是凡鲲 App 的核心功能：把体能、睡眠、活动、心率四个分数，和活动消耗、食物摄入两个热量，放进同一张雷达图。哪一项好、哪一项需要加强，一眼就能看出来，App 还会告诉你下一步怎么做。",
+                  "Health Radar is the heart of the VERKUN app: your four scores — Readiness, Sleep, Activity and Heart — plus calories burned and eaten, on a single radar chart. See at a glance what's strong and what needs work, and the app tells you what to do next."
                 )
               )}
             </p>
@@ -227,7 +227,7 @@ export default function AppPage() {
               </Link>
             </div>
           </div>
-          <AppDashboardPhone className="mx-auto" />
+          <RadarCard className="mx-auto w-full max-w-md" />
         </div>
       </section>
 
@@ -251,7 +251,7 @@ export default function AppPage() {
             title={l("四个分数，两个热量，一屏看全", "Four scores and two calorie figures, on one screen")}
             desc={l(
               "体能、睡眠、活动、心率四个分数，加上活动消耗与食物摄入，打开 App 就能看到，并可按日、周、月回看趋势。",
-              "Energy, Sleep, Activity and Heart, plus calories burned and eaten — right there when you open the app, with daily, weekly and monthly trends."
+              "Readiness, Sleep, Activity and Heart, plus calories burned and eaten — right there when you open the app, with daily, weekly and monthly trends."
             )}
           />
           <div className="mt-12 space-y-4">

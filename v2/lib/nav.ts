@@ -23,6 +23,6 @@ export const yourHealth: Chapter[] = [
     icon: "target",
     tone: "bg-teal-soft text-teal-deep",
     title: l("认识健康雷达", "Meet Health Radar"),
-    desc: l("你的健康管理 App", "Your health app"),
+    desc: l("凡鲲 App 里的健康全景图", "Your health at a glance in the VERKUN app"),
   },
 ];

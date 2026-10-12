@@ -5,7 +5,7 @@ import { l, useLang } from "@/lib/i18n";
 import { yourHealth } from "@/lib/nav";
 import AppDashboardPhone from "@/components/AppDashboardPhone";
 import RingVisual from "@/components/RingVisual";
-import PhoneDemo from "@/components/PhoneDemo";
+import RadarCard from "@/components/HealthRadar";
 import ScoreBoard, { CaloriePair } from "@/components/ScoreBoard";
 import DevicesShowcase from "@/components/DevicesShowcase";
 import ContactSection from "@/components/ContactSection";
@@ -21,7 +21,7 @@ function RadarSummary() {
         <div className="reveal in-view">
           <span className="inline-flex items-center gap-2 rounded-full border border-teal/25 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-teal-deep">
             <span className="relative h-2 w-2 rounded-full bg-teal text-teal vk-pulse" />
-            {tr(l("健康雷达 App · 全新上线", "Health Radar App · now live"))}
+            {tr(l("凡鲲 App · 全新上线", "VERKUN App · now live"))}
           </span>
           <h2 className="mt-6 text-[2.4rem] font-extrabold leading-[1.08] tracking-tight sm:text-6xl">
             {tr(l("用真实体征，", "Manage your health"))}
@@ -33,8 +33,8 @@ function RadarSummary() {
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
             {tr(
               l(
-                "健康雷达 App 汇聚智能设备 24 小时记录的心率、血氧、睡眠、压力与活动，再加上 AI 拍照识别饮食热量，把你身体的真实信号，变成每天可执行的健康行动。",
-                "Health Radar brings together the heart rate, SpO₂, sleep, stress and activity your device records around the clock — plus AI photo-based calorie tracking — and turns your body's real signals into health actions you can take every day."
+                "凡鲲 App 汇聚智能设备 24 小时记录的心率、血氧、睡眠、压力与活动，再加上 AI 拍照识别饮食热量，把你身体的真实信号，变成每天可执行的健康行动。",
+                "The VERKUN app brings together the heart rate, SpO₂, sleep, stress and activity your device records around the clock — plus AI photo-based calorie tracking — and turns your body's real signals into health actions you can take every day."
               )
             )}
           </p>
@@ -185,7 +185,7 @@ function UnderstandChapter() {
           {tr(
             l(
               "不必看懂复杂数据。体能、睡眠、活动、心率四个分数，加上活动消耗和食物摄入两个热量数字，让你每天一眼读懂身体状况，知道今天该怎么调整。",
-              "No complicated data. Four scores — Energy, Sleep, Activity and Heart — plus calories burned and calories eaten show you how your body is doing each day, and what to adjust."
+              "No complicated data. Four scores — Readiness, Sleep, Activity and Heart — plus calories burned and calories eaten show you how your body is doing each day, and what to adjust."
             )
           )}
         </ChapterHead>
@@ -202,7 +202,7 @@ function UnderstandChapter() {
 function RadarChapter() {
   const { tr } = useLang();
   const features = [
-    { icon: "heart", tone: "bg-heart-soft text-heart", href: "/health-radar#vitals", t: l("今日概览", "Today at a glance"), d: l("体能、睡眠、活动、心率四个分数，打开就能看懂。", "Energy, Sleep, Activity and Heart scores — clear the moment you open it.") },
+    { icon: "heart", tone: "bg-heart-soft text-heart", href: "/health-radar#vitals", t: l("今日概览", "Today at a glance"), d: l("体能、睡眠、活动、心率四个分数，打开就能看懂。", "Readiness, Sleep, Activity and Heart scores — clear the moment you open it.") },
     { icon: "sleep", tone: "bg-sky-soft text-sky", href: "/health-radar#sleep", t: l("睡眠与恢复", "Sleep & recovery"), d: l("睡得好不好、恢复得够不够，每天告诉你。", "How well you slept and recovered, every day.") },
     { icon: "camera", tone: "bg-amber-soft text-amber", href: "/health-radar#nutrition", t: l("AI 饮食热量识别", "AI calorie recognition"), d: l("拍照识别菜品与分量，自动计算热量与营养素。", "Snap a photo — dishes, portions, calories and macros, done.") },
     { icon: "target", tone: "bg-teal-soft text-teal-deep", href: "/health-radar#energy", t: l("能量收支", "Energy balance"), d: l("设备测消耗、App 记摄入，实时掌握每日能量缺口。", "Device-measured burn vs. logged intake, live.") },
@@ -213,8 +213,8 @@ function RadarChapter() {
       <ChapterHead index={2}>
         {tr(
           l(
-            "你的健康管理 App。所有体征、睡眠、活动与饮食数据汇聚在一起，告诉你它们之间的关系，以及下一步该怎么做。",
-            "Your health app. Vitals, sleep, activity and food come together to show how they connect — and what to do next."
+            "健康雷达是凡鲲 App 的核心：体能、睡眠、活动、心率四个分数，加上活动消耗与食物摄入，放进同一张雷达图——哪里好、哪里需要加强，一眼就能看出来。",
+            "Health Radar is the heart of the VERKUN app: Readiness, Sleep, Activity and Heart, plus calories burned and eaten, on one radar chart — see at a glance what's strong and what needs work."
           )
         )}
       </ChapterHead>
@@ -235,7 +235,7 @@ function RadarChapter() {
           ))}
         </div>
         <Reveal delay={150}>
-          <PhoneDemo />
+          <RadarCard className="w-full max-w-md" />
         </Reveal>
       </div>
     </section>
@@ -252,7 +252,7 @@ function Devices() {
             <p className="eyebrow">{tr(l("智能设备", "Devices"))}</p>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">{tr(l("选择你的数据来源", "Choose your data source"))}</h2>
             <p className="mt-3 text-muted">
-              {tr(l("佩戴任意一款 VERKUN 智能设备，即可解锁健康雷达的全部体征功能。", "Wear any VERKUN device to unlock every vitals feature in Health Radar."))}
+              {tr(l("佩戴任意一款 VERKUN 智能设备，即可解锁凡鲲 App 的全部功能。", "Wear any VERKUN device to unlock every feature of the VERKUN app."))}
             </p>
           </div>
           <Link href="/devices" className="inline-flex shrink-0 items-center gap-2 font-semibold text-teal-deep hover:underline">

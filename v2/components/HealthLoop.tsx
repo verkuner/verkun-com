@@ -18,8 +18,8 @@ export default function HealthLoop() {
       icon: "chart",
       tone: "bg-sky-soft text-sky",
       k: l("理解", "Understand"),
-      t: l("健康雷达给出四个分数", "Health Radar gives you four scores"),
-      d: l("按你自己的常态，算出体能、睡眠、活动、心率四个分数，一看就懂。", "Measured against your own normal: Energy, Sleep, Activity and Heart — clear at a glance."),
+      t: l("凡鲲 App 给出四个分数", "The VERKUN app gives you four scores"),
+      d: l("按你自己的常态，算出体能、睡眠、活动、心率四个分数，一看就懂。", "Measured against your own normal: Readiness, Sleep, Activity and Heart — clear at a glance."),
     },
     {
       icon: "target",

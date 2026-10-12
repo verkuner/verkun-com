@@ -17,17 +17,17 @@ export type Score = {
   week: number[]; // last 7 days, oldest first
 };
 
-/** The four everyday scores Health Radar uses to describe how your body is doing. Illustrative values. */
+/** The four everyday scores the VERKUN app uses to describe how your body is doing. Illustrative values. */
 export const scores: Score[] = [
   {
     key: "energy",
     icon: "spark",
     color: "#0fb5a6",
     tone: "bg-teal-soft text-teal-deep",
-    name: l("体能", "Energy"),
+    name: l("体能", "Readiness"),
     value: 82,
-    status: l("状态充沛", "Charged up"),
-    what: l("综合昨晚的睡眠与身体的恢复情况，告诉你今天的身体能量是否充足。", "Combines last night's sleep and how well you've recovered to show how much energy you have today."),
+    status: l("状态充沛", "Ready to go"),
+    what: l("综合昨晚的睡眠与身体的恢复情况，告诉你今天的身体能量是否充足。", "Combines last night's sleep and how well you've recovered to show how ready your body is today."),
     tip: l("适合 30 分钟中等强度运动", "Good day for 30 min of moderate exercise"),
     week: [70, 74, 66, 72, 78, 80, 82],
   },

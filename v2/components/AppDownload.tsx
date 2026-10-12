@@ -22,7 +22,7 @@ export default function AppDownload() {
 
           <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_auto]">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/75">{tr(l("健康雷达 App", "Health Radar App"))}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/75">{tr(l("凡鲲 App", "VERKUN App"))}</p>
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
                 {tr(l("一个 App，管理你的全部健康数据", "One app for all of your health data"))}
               </h2>

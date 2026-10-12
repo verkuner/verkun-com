@@ -18,7 +18,7 @@ function Spark({ points, color }: { points: number[]; color: string }) {
   );
 }
 
-/** Health Radar "Today" screen: the Energy score up top, then Sleep, Activity and Heart. */
+/** VERKUN app "Today" screen: the Readiness score up top, then Sleep, Activity and Heart. */
 export default function AppDashboardPhone({ className = "" }: { className?: string }) {
   const { tr } = useLang();
   const [energy, ...rest] = scores;
@@ -42,7 +42,7 @@ export default function AppDashboardPhone({ className = "" }: { className?: stri
       <div className="mx-4 flex items-center gap-4 rounded-3xl bg-white p-4">
         <ScoreGauge value={energy.value} color={energy.color} size={84} stroke={8} labelClass="text-2xl" />
         <div>
-          <p className="text-[11px] text-muted">{tr(l("今日体能", "Today's energy"))}</p>
+          <p className="text-[11px] text-muted">{tr(l("今日体能", "Today's readiness"))}</p>
           <p className="text-base font-extrabold" style={{ color: energy.color }}>
             {tr(energy.status)}
           </p>
@@ -92,7 +92,7 @@ export default function AppDashboardPhone({ className = "" }: { className?: stri
           {tr(
             l(
               "昨晚睡得很好，体能充沛。今天适合 30 分钟有氧；再走 2,000 步就能完成活动目标，晚餐建议 500 kcal 以内。",
-              "You slept well and you're charged up. Good day for 30 min of cardio; 2,000 more steps hits your activity goal — keep dinner under 500 kcal."
+              "You slept well and you're ready to go. Good day for 30 min of cardio; 2,000 more steps hits your activity goal — keep dinner under 500 kcal."
             )
           )}
         </p>
