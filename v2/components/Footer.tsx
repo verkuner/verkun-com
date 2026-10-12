@@ -3,22 +3,24 @@
 import Link from "next/link";
 import { l, useLang } from "@/lib/i18n";
 import { Logo } from "./Nav";
+import { devices } from "@/lib/devices";
 
 const groups = [
   {
-    title: l("产品", "Products"),
+    title: l("VERKUN Health App", "VERKUN Health App"),
     links: [
-      { href: "/rings/vk100", label: l("VK100 智能戒指", "VK100 Smart Ring") },
-      { href: "/rings/vk35pro", label: l("VK35 Pro 智能戒指", "VK35 Pro Smart Ring") },
-      { href: "/compare", label: l("产品对比", "Compare rings") },
+      { href: "/app", label: l("App 功能", "Features") },
+      { href: "/app#vitals", label: l("体征看板", "Vitals dashboard") },
+      { href: "/app#nutrition", label: l("AI 饮食识别", "AI nutrition") },
+      { href: "/app#download", label: l("下载 App", "Download") },
     ],
   },
   {
-    title: l("App", "App"),
+    title: l("智能设备", "Devices"),
     links: [
-      { href: "/app", label: l("AI 饮食热量识别", "AI calorie recognition") },
-      { href: "/app#features", label: l("健康数据看板", "Health dashboard") },
-      { href: "/app#download", label: l("下载 App", "Download") },
+      ...devices.map((d) => ({ href: `/devices/${d.slug}`, label: l(d.name, d.name) })),
+      { href: "/devices", label: l("全部设备", "All devices") },
+      { href: "/devices#compare", label: l("设备对比", "Compare") },
     ],
   },
   {
@@ -41,8 +43,8 @@ export default function Footer() {
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/55">
               {tr(
                 l(
-                  "智能戒指 + AI 饮食分析，让健康管理轻到无感、准到可信。",
-                  "Smart rings + AI nutrition — health tracking you barely notice and can truly trust."
+                  "用真实体征数据，管理你的健康。智能设备采集，App 分析与建议。",
+                  "Manage your health with your real vital signs — captured by our devices, made useful by the app."
                 )
               )}
             </p>
@@ -53,7 +55,7 @@ export default function Footer() {
               <h4 className="text-sm font-semibold text-white/90">{tr(g.title)}</h4>
               <ul className="mt-4 space-y-3">
                 {g.links.map((item) => (
-                  <li key={item.label.en}>
+                  <li key={item.href + item.label.en}>
                     <Link href={item.href} className="text-sm text-white/55 transition-colors hover:text-teal">
                       {tr(item.label)}
                     </Link>
@@ -67,8 +69,8 @@ export default function Footer() {
         <p className="mt-14 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-xs leading-relaxed text-white/45">
           {tr(
             l(
-              "健康提示：VK 系列智能戒指及 App 为消费级健康管理产品，不属于医疗器械，所提供的数据与建议仅供参考，不能替代专业医疗诊断。如有身体不适，请及时就医。",
-              "Health notice: VK smart rings and the app are consumer wellness products, not medical devices. Data and suggestions are for reference only and do not replace professional medical diagnosis. Please consult a doctor if you feel unwell."
+              "健康提示：VERKUN 智能设备（含 VK 系列智能戒指）与 VERKUN Health App 为健康设备及健康管理产品，非医疗器械，不用于疾病的诊断、治疗或预防。所提供的数据与建议仅供日常健康管理参考，不能替代专业医疗意见。如有身体不适，请及时就医。",
+              "Health notice: VERKUN devices (including VK smart rings) and the VERKUN Health app are health and wellness products, not medical devices, and are not intended to diagnose, treat or prevent any disease. Data and suggestions support everyday self-care and do not replace professional medical advice. Please consult a doctor if you feel unwell."
             )
           )}
         </p>

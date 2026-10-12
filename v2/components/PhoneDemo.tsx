@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { l, useLang } from "@/lib/i18n";
-import { dishes } from "@/lib/products";
+import { dishes } from "@/lib/devices";
 import Icon from "./Icon";
+import PhoneFrame from "./PhoneFrame";
 
 const SCAN_MS = 1500;
 const AUTOPLAY_MS = 6500;
@@ -88,19 +89,7 @@ export default function PhoneDemo({ autoplay = true }: { autoplay?: boolean }) {
         ))}
       </div>
 
-      {/* phone */}
-      <div className="relative w-[300px] rounded-[48px] bg-[#0b0d10] p-3 shadow-[0_40px_80px_-30px_rgba(15,34,48,0.55)]">
-        <div className="absolute left-1/2 top-3 z-10 h-6 w-28 -translate-x-1/2 rounded-b-2xl bg-[#0b0d10]" />
-        <div className="overflow-hidden rounded-[38px] bg-canvas">
-          <div className="flex items-center justify-between px-6 pt-3 pb-1 text-[11px] font-semibold text-ink">
-            <span>9:41</span>
-            <span className="flex items-center gap-1">
-              <span className="h-2 w-3 rounded-sm bg-ink/80" />
-              <span className="h-2.5 w-5 rounded-[3px] border border-ink/70 p-[1px]">
-                <span className="block h-full w-3/4 rounded-[1px] bg-mint" />
-              </span>
-            </span>
-          </div>
+      <PhoneFrame>
 
           <div className="flex items-center justify-between px-5 pt-2 pb-3">
             <div>
@@ -195,8 +184,7 @@ export default function PhoneDemo({ autoplay = true }: { autoplay?: boolean }) {
               {tr(l("加入今日饮食", "Add to today's log"))}
             </div>
           </div>
-        </div>
-      </div>
+      </PhoneFrame>
     </div>
   );
 }

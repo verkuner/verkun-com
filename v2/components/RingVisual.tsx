@@ -1,7 +1,7 @@
 "use client";
 
 import { useId } from "react";
-import { finishes } from "@/lib/products";
+import { finishes } from "@/lib/devices";
 
 const ellipse = (cx: number, cy: number, rx: number, ry: number) =>
   `M${cx - rx},${cy} a${rx},${ry} 0 1,0 ${rx * 2},0 a${rx},${ry} 0 1,0 ${-rx * 2},0 Z`;

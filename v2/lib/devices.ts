@@ -25,8 +25,16 @@ export const finishes: Record<string, Finish> = {
 
 export type Spec = { label: L; value: L };
 
-export type Ring = {
-  slug: "vk100" | "vk35pro";
+export type DeviceCategory = "ring";
+
+/** Device families. Add a new category here when a new kind of device launches. */
+export const categories: { key: DeviceCategory; name: L }[] = [
+  { key: "ring", name: l("智能戒指", "Smart rings") },
+];
+
+export type Device = {
+  slug: string;
+  category: DeviceCategory;
   name: string;
   badge: L;
   tagline: L;
@@ -38,15 +46,16 @@ export type Ring = {
   inBox: L[];
 };
 
-export const rings: Ring[] = [
+export const devices: Device[] = [
   {
     slug: "vk100",
+    category: "ring",
     name: "VK100",
     badge: l("全天候健康戒指", "Everyday health ring"),
     tagline: l("轻至 3 克，读懂身体每一刻", "Just 3 g. Reads your body, every moment."),
     summary: l(
-      "VK100 以钛合金一体成型，内置医疗级传感阵列，24 小时连续监测心率、血氧、睡眠与压力。无屏幕、无打扰，只在你需要时给出洞察。",
-      "Crafted from a single piece of titanium with a medical-grade sensor array, VK100 continuously tracks heart rate, SpO₂, sleep and stress — no screen, no distraction, just insight when you need it."
+      "VK100 以钛合金一体成型，内置高精度传感阵列，24 小时连续监测心率、血氧、睡眠与压力。无屏幕、无打扰，只在你需要时给出洞察。",
+      "Crafted from a single piece of titanium with a high-precision sensor array, VK100 continuously tracks heart rate, SpO₂, sleep and stress — no screen, no distraction, just insight when you need it."
     ),
     finishes: ["black", "silver", "gold"],
     keySpecs: [
@@ -55,13 +64,13 @@ export const rings: Ring[] = [
       { value: l("5ATM", "5ATM"), label: l("防水", "Water resistant") },
     ],
     highlights: [
-      { icon: "heart", title: l("24h 心率", "24/7 heart rate"), desc: l("PPG 光学传感，静息心率与异常提醒。", "Optical PPG with resting HR and anomaly alerts.") },
-      { icon: "o2", title: l("血氧饱和度", "Blood oxygen"), desc: l("夜间血氧连续监测，关注呼吸质量。", "Overnight SpO₂ monitoring for breathing quality.") },
+      { icon: "heart", title: l("24h 心率", "24/7 heart rate"), desc: l("PPG 光学传感，记录静息心率与全天变化趋势。", "Optical PPG tracks resting heart rate and how it changes through the day.") },
+      { icon: "o2", title: l("血氧饱和度", "Blood oxygen"), desc: l("夜间持续记录血氧，了解睡眠中的血氧水平。", "Overnight SpO₂ tracking shows your levels while you sleep.") },
       { icon: "sleep", title: l("睡眠分期", "Sleep staging"), desc: l("深睡、浅睡、REM、清醒四段精准分析。", "Deep, light, REM and awake — precisely staged.") },
       { icon: "stress", title: l("HRV 与压力", "HRV & stress"), desc: l("基于心率变异性评估压力与恢复状态。", "Stress and recovery scored from heart-rate variability.") },
     ],
     specs: [
-      { label: l("材质", "Material"), value: l("航空级钛合金外圈 · 医用树脂内衬", "Aerospace titanium shell · medical-grade resin inner") },
+      { label: l("材质", "Material"), value: l("航空级钛合金外圈 · 亲肤树脂内衬", "Aerospace titanium shell · skin-friendly resin inner") },
       { label: l("尺寸", "Dimensions"), value: l("宽 7.0 mm · 厚 2.6 mm", "7.0 mm wide · 2.6 mm thick") },
       { label: l("重量", "Weight"), value: l("约 3 g（视尺码）", "Approx. 3 g (size dependent)") },
       { label: l("传感器", "Sensors"), value: l("PPG 心率/血氧 · 三轴加速度 · 皮肤温度", "PPG HR/SpO₂ · 3-axis accelerometer · skin temperature") },
@@ -75,6 +84,7 @@ export const rings: Ring[] = [
   },
   {
     slug: "vk35pro",
+    category: "ring",
     name: "VK35 Pro",
     badge: l("专业运动健康戒指", "Pro sport & health ring"),
     tagline: l("更长续航，更强感知，随身充电仓", "Longer life. Sharper sensing. Pocket charging case."),
@@ -92,10 +102,10 @@ export const rings: Ring[] = [
       { icon: "run", title: l("运动自动识别", "Auto sport detection"), desc: l("跑步、骑行、游泳等 20+ 模式自动记录。", "Running, cycling, swimming and 20+ modes logged automatically.") },
       { icon: "gesture", title: l("手势智控", "Gesture control"), desc: l("指尖轻敲即可拍照、翻页、切歌。", "Tap to take photos, turn pages or skip tracks.") },
       { icon: "battery", title: l("随身充电仓", "Charging case"), desc: l("充电仓可为戒指充电约 5 次。", "Case recharges the ring about 5 times.") },
-      { icon: "temp", title: l("体温趋势", "Temperature trends"), desc: l("夜间皮肤温度变化，辅助观察身体状态。", "Overnight skin-temperature shifts to read your body's signals.") },
+      { icon: "temp", title: l("体温趋势", "Temperature trends"), desc: l("记录夜间皮肤温度变化，帮助了解身体状态。", "Overnight skin-temperature shifts to read your body's signals.") },
     ],
     specs: [
-      { label: l("材质", "Material"), value: l("钛合金外圈 · 医用树脂内衬", "Titanium shell · medical-grade resin inner") },
+      { label: l("材质", "Material"), value: l("钛合金外圈 · 亲肤树脂内衬", "Titanium shell · skin-friendly resin inner") },
       { label: l("尺寸", "Dimensions"), value: l("宽 8.0 mm · 厚 2.4 mm", "8.0 mm wide · 2.4 mm thick") },
       { label: l("重量", "Weight"), value: l("约 3.6 g（视尺码）", "Approx. 3.6 g (size dependent)") },
       { label: l("传感器", "Sensors"), value: l("PPG 心率/血氧 · 六轴运动传感 · 皮肤温度", "PPG HR/SpO₂ · 6-axis motion · skin temperature") },
@@ -110,9 +120,9 @@ export const rings: Ring[] = [
   },
 ];
 
-export const getRing = (slug: string) => rings.find((r) => r.slug === slug);
+export const getDevice = (slug: string) => devices.find((d) => d.slug === slug);
 
-/** Rows for the side-by-side comparison page. */
+/** Rows for the smart-ring comparison table. */
 export const compareRows: { label: L; vk100: L; vk35pro: L }[] = [
   { label: l("定位", "Positioning"), vk100: l("日常全天候健康", "Everyday wellness"), vk35pro: l("运动与专业健康", "Sport & pro health") },
   { label: l("重量", "Weight"), vk100: l("约 3 g", "~3 g"), vk35pro: l("约 3.6 g", "~3.6 g") },

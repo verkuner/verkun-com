@@ -3,18 +3,19 @@
 import Link from "next/link";
 import { useState } from "react";
 import { l, useLang } from "@/lib/i18n";
-import { finishes, rings, type Ring } from "@/lib/products";
+import { categories, devices, finishes, type Device } from "@/lib/devices";
 import RingVisual from "./RingVisual";
 import Icon from "./Icon";
 import Reveal from "./Reveal";
 
 const SIZES = [7, 8, 9, 10, 11, 12, 13];
 
-export default function RingDetail({ ring }: { ring: Ring }) {
+export default function DeviceDetail({ ring }: { ring: Device }) {
   const { tr } = useLang();
   const [finish, setFinish] = useState(ring.finishes[0]);
   const [size, setSize] = useState<number | null>(null);
-  const other = rings.find((r) => r.slug !== ring.slug)!;
+  const other = devices.find((d) => d.slug !== ring.slug && d.category === ring.category);
+  const category = categories.find((c) => c.key === ring.category)!;
 
   return (
     <>
@@ -28,9 +29,13 @@ export default function RingDetail({ ring }: { ring: Ring }) {
           </div>
 
           <div className="reveal in-view order-1 lg:order-2">
-            <Link href="/" className="text-sm text-muted hover:text-teal-deep">
-              ← {tr(l("返回首页", "Back to home"))}
-            </Link>
+            <nav className="flex items-center gap-2 text-sm text-muted" aria-label="breadcrumb">
+              <Link href="/devices" className="hover:text-teal-deep">{tr(l("智能设备", "Devices"))}</Link>
+              <span>/</span>
+              <span>{tr(category.name)}</span>
+              <span>/</span>
+              <span className="font-semibold text-ink">{ring.name}</span>
+            </nav>
             <span className="mt-6 block w-fit rounded-full bg-teal-soft px-3 py-1 text-xs font-semibold text-teal-deep">{tr(ring.badge)}</span>
             <h1 className="mt-4 text-5xl font-extrabold tracking-tight sm:text-7xl">{ring.name}</h1>
             <p className="mt-3 text-xl font-semibold text-ink/80">{tr(ring.tagline)}</p>
@@ -88,7 +93,7 @@ export default function RingDetail({ ring }: { ring: Ring }) {
                 {tr(l("预约购买", "Reserve now"))}
                 {size && <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs">US {size}</span>}
               </Link>
-              <Link href="/compare" className="rounded-full border border-line bg-white px-7 py-3.5 text-center font-semibold hover:border-teal">
+              <Link href="/devices#compare" className="rounded-full border border-line bg-white px-7 py-3.5 text-center font-semibold hover:border-teal">
                 {tr(l("对比 VK100 与 VK35 Pro", "Compare VK100 & VK35 Pro"))}
               </Link>
             </div>
@@ -177,8 +182,9 @@ export default function RingDetail({ ring }: { ring: Ring }) {
                 </ul>
               </div>
             </Reveal>
+            {other && (
             <Reveal delay={180}>
-              <Link href={`/rings/${other.slug}`} className="card group block overflow-hidden p-7 transition-colors hover:border-teal/40">
+              <Link href={`/devices/${other.slug}`} className="card group block overflow-hidden p-7 transition-colors hover:border-teal/40">
                 <p className="text-xs font-semibold text-muted">{tr(l("同系列", "Also in the family"))}</p>
                 <div className="mt-2 flex items-center justify-between gap-4">
                   <div>
@@ -189,6 +195,7 @@ export default function RingDetail({ ring }: { ring: Ring }) {
                 </div>
               </Link>
             </Reveal>
+            )}
           </div>
         </div>
       </section>

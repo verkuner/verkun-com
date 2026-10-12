@@ -2,77 +2,60 @@
 
 import Link from "next/link";
 import { l, useLang } from "@/lib/i18n";
-import { rings } from "@/lib/products";
+import AppDashboardPhone from "@/components/AppDashboardPhone";
 import RingVisual from "@/components/RingVisual";
 import PhoneDemo from "@/components/PhoneDemo";
 import VitalsBoard from "@/components/VitalsBoard";
+import EnergyBalance from "@/components/EnergyBalance";
+import DevicesShowcase from "@/components/DevicesShowcase";
+import HealthDeviceNote from "@/components/HealthDeviceNote";
 import ContactSection from "@/components/ContactSection";
 import AppDownload from "@/components/AppDownload";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 
-const capabilities = [
-  l("24h 心率", "24/7 heart rate"),
-  l("血氧饱和度", "Blood oxygen"),
-  l("睡眠分期", "Sleep staging"),
-  l("HRV 压力评估", "HRV stress"),
-  l("皮肤温度趋势", "Skin temperature"),
-  l("运动自动识别", "Auto activity"),
-  l("AI 食物识别", "AI food recognition"),
-  l("热量与营养素", "Calories & macros"),
-  l("能量收支平衡", "Energy balance"),
-];
-
 function Hero() {
   const { tr } = useLang();
-  const chips = [
-    { pos: "left-0 top-8 sm:-left-4", icon: "heart", tone: "bg-heart-soft text-heart", k: l("心率", "Heart rate"), v: "62 bpm" },
-    { pos: "right-0 top-24 sm:-right-2", icon: "o2", tone: "bg-teal-soft text-teal-deep", k: l("血氧", "SpO₂"), v: "98%" },
-    { pos: "left-2 bottom-20 sm:-left-6", icon: "sleep", tone: "bg-sky-soft text-sky", k: l("睡眠", "Sleep"), v: "7h 42m" },
-    { pos: "right-2 bottom-6", icon: "bowl", tone: "bg-mint-soft text-mint", k: l("今日摄入", "Intake today"), v: "1,480 kcal" },
-  ];
-
   return (
-    <section className="hero-glow relative overflow-hidden pt-28 pb-16 sm:pt-32">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr]">
+    <section className="hero-glow relative overflow-hidden pt-28 pb-20 sm:pt-32">
+      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="reveal in-view">
           <span className="inline-flex items-center gap-2 rounded-full border border-teal/25 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-teal-deep">
             <span className="relative h-2 w-2 rounded-full bg-teal text-teal vk-pulse" />
-            {tr(l("全新 VK 系列智能戒指 · AI 饮食 App 同步上线", "New VK smart rings · AI nutrition app, now live"))}
+            {tr(l("VERKUN Health App · 全新上线", "VERKUN Health App · now live"))}
           </span>
-          <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-[4.3rem]">
-            {tr(l("戴在指尖的", "Health intelligence,"))}
+          <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-[4.2rem]">
+            {tr(l("用真实体征，", "Manage your health"))}
             <br />
             <span className="bg-gradient-to-r from-teal-deep via-teal to-sky bg-clip-text text-transparent">
-              {tr(l("健康智能", "at your fingertip"))}
+              {tr(l("管理你的健康", "with your real vitals"))}
             </span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
             {tr(
               l(
-                "VK 系列智能戒指 24 小时读懂你的身体；拍一张餐食照片，AI 即刻算出热量与营养。摄入与消耗，一目了然。",
-                "VK smart rings read your body around the clock. Snap a photo of your meal and AI instantly works out calories and nutrients. Energy in, energy out — at a glance."
+                "VERKUN Health App 汇聚智能设备 24 小时记录的心率、血氧、睡眠、压力与活动，再加上 AI 拍照识别饮食热量，把你身体的真实信号，变成每天可执行的健康行动。",
+                "VERKUN Health brings together the heart rate, SpO₂, sleep, stress and activity your device records around the clock — plus AI photo-based calorie tracking — and turns your body's real signals into health actions you can take every day."
               )
             )}
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/rings/vk100"
+              href="/app#download"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-teal px-7 py-3.5 font-semibold text-white shadow-[0_14px_30px_-12px_rgba(15,181,166,0.8)] transition-colors hover:bg-teal-deep"
             >
-              {tr(l("探索 VK 智能戒指", "Explore VK rings"))}
+              {tr(l("下载 App", "Get the App"))}
               <Icon name="arrow" className="h-4 w-4" />
             </Link>
             <Link
               href="/app"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-white px-7 py-3.5 font-semibold text-ink transition-colors hover:border-teal"
             >
-              <Icon name="camera" className="h-4 w-4 text-teal-deep" />
-              {tr(l("体验 AI 识餐", "Try AI meal scan"))}
+              {tr(l("了解 App 功能", "Explore the app"))}
             </Link>
           </div>
           <ul className="mt-10 flex max-w-xl flex-wrap gap-x-6 gap-y-3 text-sm text-ink/75">
-            {[l("医疗级传感器", "Medical-grade sensors"), l("5ATM 防水", "5ATM water-proof"), l("最长 60 天续航", "Up to 60-day battery"), l("数据加密存储", "Encrypted data")].map((t) => (
+            {[l("真实体征 · 24h 记录", "Real vitals, 24/7"), l("AI 饮食热量识别", "AI calorie recognition"), l("个性化健康建议", "Personal guidance"), l("数据加密存储", "Encrypted data")].map((t) => (
               <li key={t.en} className="flex items-center gap-1.5 whitespace-nowrap">
                 <Icon name="check" className="h-4 w-4 shrink-0 text-teal" />
                 {tr(t)}
@@ -81,102 +64,134 @@ function Hero() {
           </ul>
         </div>
 
-        <div className="relative mx-auto aspect-square w-full max-w-[520px]">
-          <div className="absolute inset-[12%] rounded-full bg-gradient-to-br from-teal-soft via-white to-sky-soft" />
-          <div className="absolute inset-[12%] rounded-full border border-teal/20" />
-          <div className="absolute inset-[2%] rounded-full border border-dashed border-teal/20" />
-          <RingVisual finish="black" className="animate-vk-float absolute left-[14%] top-[14%] w-[52%] drop-shadow-2xl" />
-          <RingVisual finish="gold" className="animate-vk-float-b absolute right-[10%] bottom-[12%] w-[42%] drop-shadow-xl" sensor={false} />
-          {chips.map((c, i) => (
-            <div
-              key={c.k.en}
-              className={`reveal in-view absolute ${c.pos} flex items-center gap-2.5 rounded-2xl border border-line bg-white/90 py-2 pl-2 pr-4 shadow-lg backdrop-blur`}
-              style={{ animationDelay: `${300 + i * 150}ms` }}
-            >
-              <span className={`grid h-9 w-9 place-items-center rounded-xl ${c.tone}`}>
-                <Icon name={c.icon} className="h-4.5 w-4.5" />
+        <div className="relative mx-auto flex w-full max-w-[460px] justify-center lg:justify-end">
+          <div className="absolute inset-x-6 top-10 bottom-10 rounded-full bg-gradient-to-br from-teal-soft via-white to-sky-soft blur-2xl" />
+          <AppDashboardPhone className="relative" />
+          {/* the device that feeds the app */}
+          <div
+            className="reveal in-view absolute -left-6 bottom-6 hidden items-center lg:-left-14 gap-3 rounded-3xl border border-line bg-white/95 p-3 pr-5 shadow-xl backdrop-blur sm:flex"
+            style={{ animationDelay: "400ms" }}
+          >
+            <span className="grid h-16 w-16 place-items-center rounded-2xl bg-canvas">
+              <RingVisual finish="black" shadow={false} className="animate-vk-float h-14" />
+            </span>
+            <span>
+              <span className="block text-[11px] text-muted">{tr(l("数据来源", "Data source"))}</span>
+              <span className="block text-sm font-bold">VK100</span>
+              <span className="mt-0.5 flex items-center gap-1 text-[11px] font-semibold text-mint">
+                <span className="relative h-1.5 w-1.5 rounded-full bg-mint text-mint vk-pulse" />
+                {tr(l("实时同步中", "Syncing live"))}
               </span>
-              <span>
-                <span className="block text-[11px] text-muted">{tr(c.k)}</span>
-                <span className="block text-sm font-bold tabular-nums">{c.v}</span>
-              </span>
-            </div>
-          ))}
+            </span>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function Marquee() {
+function Loop() {
   const { tr } = useLang();
-  const items = [...capabilities, ...capabilities];
+  const steps = [
+    {
+      icon: "heart",
+      tone: "bg-heart-soft text-heart",
+      k: l("采集", "Capture"),
+      t: l("设备记录真实体征", "Devices record real vitals"),
+      d: l("佩戴 VERKUN 智能设备，全天候、无感地记录心率、血氧、睡眠、体温与活动。", "Wear a VERKUN device to record heart rate, SpO₂, sleep, temperature and activity — all day, effortlessly."),
+    },
+    {
+      icon: "chart",
+      tone: "bg-sky-soft text-sky",
+      k: l("理解", "Understand"),
+      t: l("App 读懂你的数据", "The app makes sense of it"),
+      d: l("建立你的个人基线，识别趋势与变化，生成睡眠、恢复与活动评分。", "It learns your personal baseline, spots trends and changes, and scores your sleep, recovery and activity."),
+    },
+    {
+      icon: "target",
+      tone: "bg-mint-soft text-mint",
+      k: l("行动", "Act"),
+      t: l("给出可执行的建议", "You get clear next steps"),
+      d: l("结合饮食与能量收支，告诉你今天该怎么睡、怎么吃、怎么动。", "Combined with your meals and energy balance, it tells you how to sleep, eat and move today."),
+    },
+  ];
   return (
-    <div className="border-y border-line bg-white py-4">
-      <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-        <div className="animate-vk-marquee flex w-max gap-10">
-          {items.map((c, i) => (
-            <span key={i} className="flex items-center gap-10 whitespace-nowrap text-sm font-semibold text-ink/55">
-              {tr(c)}
-              <span className="h-1.5 w-1.5 rounded-full bg-teal" />
-            </span>
-          ))}
+    <section className="border-y border-line bg-white py-20">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <p className="eyebrow">{tr(l("健康管理闭环", "How it works"))}</p>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
+            {tr(l("从真实信号，到真实改变", "From real signals to real change"))}
+          </h2>
+        </Reveal>
+        <div className="relative mt-14">
+          <div className="absolute left-[16%] right-[16%] top-8 hidden border-t-2 border-dashed border-teal/25 md:block" />
+          <ol className="relative grid gap-10 md:grid-cols-3 md:gap-6">
+            {steps.map((s, i) => (
+              <li key={s.k.en}>
+                <Reveal delay={i * 120} className="text-center">
+                  <span className={`mx-auto grid h-16 w-16 place-items-center rounded-3xl ${s.tone} ring-8 ring-white`}>
+                    <Icon name={s.icon} className="h-7 w-7" />
+                  </span>
+                  <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-muted">
+                    0{i + 1} · {tr(s.k)}
+                  </p>
+                  <p className="mt-2 text-xl font-bold">{tr(s.t)}</p>
+                  <p className="mx-auto mt-2 max-w-xs text-sm leading-relaxed text-muted">{tr(s.d)}</p>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-function Products() {
+function Features() {
   const { tr } = useLang();
+  const items = [
+    { icon: "heart", tone: "bg-heart-soft text-heart", href: "/app#vitals", t: l("体征看板", "Vitals dashboard"), d: l("心率、血氧、HRV、体温一屏总览，日 / 周 / 月趋势随时回看。", "Heart rate, SpO₂, HRV and temperature at a glance, with daily, weekly and monthly trends.") },
+    { icon: "sleep", tone: "bg-sky-soft text-sky", href: "/app#sleep", t: l("睡眠分析", "Sleep analysis"), d: l("深睡、浅睡、REM 分期与睡眠评分，找出影响睡眠的习惯。", "Deep, light and REM stages plus a sleep score — find the habits that affect your rest.") },
+    { icon: "stress", tone: "bg-mint-soft text-mint", href: "/app#sleep", t: l("压力与恢复", "Stress & recovery"), d: l("基于 HRV 评估每日恢复状态，合理安排训练与休息。", "Daily recovery scored from HRV so you can balance training and rest.") },
+    { icon: "camera", tone: "bg-amber-soft text-amber", href: "/app#nutrition", t: l("AI 饮食识别", "AI nutrition"), d: l("拍照识别菜品与分量，自动计算热量与营养素。", "Snap a photo to identify dishes and portions; calories and macros are calculated for you.") },
+    { icon: "target", tone: "bg-teal-soft text-teal-deep", href: "/app#energy", t: l("能量收支", "Energy balance"), d: l("设备测消耗、App 记摄入，实时掌握每日能量缺口。", "Your device measures burn, the app logs intake — see your daily balance live.") },
+    { icon: "spark", tone: "bg-sky-soft text-sky", href: "/app#reports", t: l("AI 健康建议", "AI guidance"), d: l("综合全部数据，生成每日建议与周报，帮你坚持下去。", "Everything combined into daily tips and weekly reports that help you stick with it.") },
+  ];
   return (
     <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
-      <Reveal className="mx-auto max-w-2xl text-center">
-        <p className="eyebrow">{tr(l("VK 智能戒指系列", "The VK ring family"))}</p>
-        <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-          {tr(l("两款戒指，一种更轻的健康方式", "Two rings. One lighter way to stay healthy."))}
-        </h2>
-        <p className="mt-4 text-muted">
-          {tr(l("无屏幕、无打扰，全天佩戴也几乎感觉不到它的存在。", "No screen, no buzzing — so light you'll forget it's there."))}
+      <Reveal className="grid gap-6 lg:grid-cols-2 lg:items-end">
+        <div>
+          <p className="eyebrow">{tr(l("App 核心功能", "What the app does"))}</p>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
+            {tr(l("一个 App，", "One app for"))}
+            <br />
+            {tr(l("看懂你的全部健康数据", "your whole health picture"))}
+          </h2>
+        </div>
+        <p className="text-muted lg:pb-2">
+          {tr(
+            l(
+              "不只是记录数字。VERKUN Health 把分散的体征、睡眠、运动和饮食数据放在一起分析，告诉你它们之间的关系，以及下一步该做什么。",
+              "It's more than numbers. VERKUN Health analyses vitals, sleep, activity and food together, shows how they connect, and tells you what to do next."
+            )
+          )}
         </p>
       </Reveal>
-
-      <div className="mt-14 grid gap-6 lg:grid-cols-2">
-        {rings.map((r, i) => (
-          <Reveal key={r.slug} delay={i * 120}>
-            <article className="card group relative flex h-full flex-col overflow-hidden p-8 sm:p-10">
-              <div className="flex items-start justify-between">
-                <div>
-                  <span className="rounded-full bg-teal-soft px-3 py-1 text-xs font-semibold text-teal-deep">{tr(r.badge)}</span>
-                  <h3 className="mt-4 text-4xl font-extrabold tracking-tight">{r.name}</h3>
-                  <p className="mt-2 max-w-sm text-muted">{tr(r.tagline)}</p>
-                </div>
-              </div>
-
-              <div className="relative my-6 flex h-64 items-center justify-center">
-                <div className="absolute h-56 w-56 rounded-full bg-gradient-to-br from-canvas to-teal-soft transition-transform duration-700 group-hover:scale-110" />
-                <RingVisual finish={r.finishes[i === 0 ? 0 : 1]} className="relative h-64 transition-transform duration-700 group-hover:-rotate-6" />
-              </div>
-
-              <div className="grid grid-cols-3 divide-x divide-line rounded-2xl bg-canvas py-4 text-center">
-                {r.keySpecs.map((s) => (
-                  <div key={s.label.en}>
-                    <p className="text-xl font-extrabold tabular-nums">{tr(s.value)}</p>
-                    <p className="mt-0.5 text-xs text-muted">{tr(s.label)}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={`/rings/${r.slug}`} className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-teal-deep">
-                  {tr(l("了解详情", "Learn more"))}
-                  <Icon name="arrow" className="h-4 w-4" />
-                </Link>
-                <Link href="/compare" className="rounded-full border border-line px-6 py-3 text-sm font-semibold transition-colors hover:border-teal">
-                  {tr(l("产品对比", "Compare"))}
-                </Link>
-              </div>
-            </article>
+      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((f, i) => (
+          <Reveal key={f.t.en} delay={(i % 3) * 100}>
+            <Link href={f.href} className="card group flex h-full flex-col p-7 transition-transform hover:-translate-y-1">
+              <span className={`grid h-12 w-12 place-items-center rounded-2xl ${f.tone}`}>
+                <Icon name={f.icon} className="h-6 w-6" />
+              </span>
+              <h3 className="mt-5 text-lg font-bold">{tr(f.t)}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{tr(f.d)}</p>
+              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-teal-deep opacity-70 transition-opacity group-hover:opacity-100">
+                {tr(l("了解更多", "Learn more"))}
+                <Icon name="arrow" className="h-4 w-4" />
+              </span>
+            </Link>
           </Reveal>
         ))}
       </div>
@@ -193,18 +208,18 @@ function Vitals() {
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal className="grid gap-6 lg:grid-cols-2 lg:items-end">
           <div>
-            <p className="eyebrow !text-teal">{tr(l("全天候健康监测", "Around-the-clock monitoring"))}</p>
+            <p className="eyebrow !text-teal">{tr(l("真实体征", "Real vitals"))}</p>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-              {tr(l("你的身体，", "Your body,"))}
+              {tr(l("每一个数字，", "Every number comes"))}
               <br />
-              {tr(l("24 小时被温柔读懂", "gently understood 24/7"))}
+              {tr(l("都来自你真实的身体", "from your real body"))}
             </h2>
           </div>
           <p className="text-white/60 lg:pb-2">
             {tr(
               l(
-                "指根动脉血流丰富、佩戴稳定，光学信号比手腕更清晰。VK 戒指持续采集心率、血氧、体温与运动数据，在 App 中生成可读、可行动的健康报告。",
-                "The finger's rich arterial flow and snug fit give cleaner optical signals than the wrist. VK rings continuously capture heart rate, SpO₂, temperature and movement, turning them into readable, actionable reports in the app."
+                "不靠估算、不靠问卷。App 中的数据由你佩戴的智能设备连续记录，以你自己的历史数据为基线，变化一目了然。",
+                "No guesswork, no questionnaires. The data in the app is recorded continuously by the device you wear and compared with your own history, so changes stand out."
               )
             )}
           </p>
@@ -218,14 +233,8 @@ function Vitals() {
   );
 }
 
-function AiCalories() {
+function Nutrition() {
   const { tr } = useLang();
-  const steps = [
-    { icon: "camera", t: l("拍一张照片", "Snap a photo"), d: l("对准餐盘拍照，支持一餐多道菜。", "Point at your plate — multiple dishes per meal supported.") },
-    { icon: "spark", t: l("AI 识别菜品与分量", "AI identifies dish & portion"), d: l("视觉大模型识别菜品，并结合餐具参照估算份量。", "A vision model recognises each dish and estimates portion size from tableware cues.") },
-    { icon: "chart", t: l("热量与营养素拆解", "Calories & macros"), d: l("给出热量、蛋白质、碳水与脂肪，自动记入饮食日志。", "Get calories, protein, carbs and fat, logged to your food diary automatically.") },
-    { icon: "target", t: l("个性化饮食建议", "Personal guidance"), d: l("结合戒指测得的消耗与目标，给出下一餐建议。", "Combined with ring-measured burn and your goals, get advice for the next meal.") },
-  ];
   return (
     <section className="mx-auto max-w-7xl px-5 py-24 sm:px-8">
       <div className="grid items-center gap-14 lg:grid-cols-[1fr_auto]">
@@ -239,27 +248,27 @@ function AiCalories() {
           <p className="mt-5 max-w-xl text-muted">
             {tr(
               l(
-                "不用称重、不用手动搜索。针对中式菜肴深度优化的 AI 模型，一秒识别菜品、估算份量，告诉你这一餐吃进了什么。",
-                "No scales, no searching databases. Our AI — deeply tuned for Chinese cuisine — recognises dishes and estimates portions in about a second, so you know exactly what's on your plate."
+                "不用称重、不用手动搜索。针对中式菜肴优化的 AI 模型识别菜品、估算份量，自动记入饮食日志，并和设备测得的消耗一起计算能量收支。",
+                "No scales, no database searches. Our AI — tuned for Chinese cuisine — recognises dishes, estimates portions, logs them for you, and weighs them against the burn your device measures."
               )
             )}
           </p>
-          <ol className="mt-10 grid gap-4 sm:grid-cols-2">
-            {steps.map((s, i) => (
-              <li key={s.t.en} className="card p-5">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-mint-soft text-mint">
-                    <Icon name={s.icon} className="h-5 w-5" />
-                  </span>
-                  <span className="text-xs font-bold text-muted">0{i + 1}</span>
-                </div>
-                <p className="mt-4 font-bold">{tr(s.t)}</p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted">{tr(s.d)}</p>
+          <ul className="mt-8 space-y-3 text-sm">
+            {[
+              l("一餐多菜同时识别，结果可一键微调", "Several dishes per photo, adjustable in one tap"),
+              l("热量、蛋白质、碳水、脂肪全面拆解", "Calories, protein, carbs and fat broken down"),
+              l("根据当日消耗，给出下一餐建议", "Next-meal advice based on today's burn"),
+            ].map((t) => (
+              <li key={t.en} className="flex items-center gap-2">
+                <span className="grid h-5 w-5 place-items-center rounded-full bg-mint-soft text-mint">
+                  <Icon name="check" className="h-3.5 w-3.5" />
+                </span>
+                {tr(t)}
               </li>
             ))}
-          </ol>
-          <Link href="/app" className="mt-8 inline-flex items-center gap-2 font-semibold text-teal-deep hover:underline">
-            {tr(l("了解 AI 饮食 App", "Explore the AI nutrition app"))}
+          </ul>
+          <Link href="/app#nutrition" className="mt-8 inline-flex items-center gap-2 font-semibold text-teal-deep hover:underline">
+            {tr(l("了解 AI 饮食识别", "More on AI nutrition"))}
             <Icon name="arrow" className="h-4 w-4" />
           </Link>
         </Reveal>
@@ -271,100 +280,28 @@ function AiCalories() {
   );
 }
 
-function EnergyBalance() {
+function Devices() {
   const { tr } = useLang();
-  const intake = 1480;
-  const bmr = 1618;
-  const active = 512;
-  const burn = bmr + active;
-  const net = intake - burn;
-  const max = burn;
   return (
-    <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
-      <div className="card overflow-hidden p-8 sm:p-12">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <Reveal>
-            <p className="eyebrow">{tr(l("能量闭环", "Closed-loop energy"))}</p>
+    <section className="bg-white py-24">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="eyebrow">{tr(l("智能设备", "Devices"))}</p>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
-              {tr(l("戒指算消耗，App 算摄入", "The ring measures burn. The app measures intake."))}
+              {tr(l("选择你的数据来源", "Choose your data source"))}
             </h2>
-            <p className="mt-4 text-muted">
-              {tr(
-                l(
-                  "两端数据自动汇合，实时呈现今日能量收支。无论减脂、增肌还是维持体重，都能清楚知道下一步该怎么做。",
-                  "Both sides meet automatically to show today's energy balance in real time — whether you're cutting, building or maintaining, you'll know the next step."
-                )
-              )}
+            <p className="mt-3 text-muted">
+              {tr(l("佩戴任意一款 VERKUN 智能设备，即可解锁 App 的全部体征功能。", "Wear any VERKUN device to unlock every vitals feature in the app."))}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3 text-sm">
-              {[
-                { icon: "sync", t: l("蓝牙自动同步", "Auto Bluetooth sync") },
-                { icon: "shield", t: l("数据加密，仅你可见", "Encrypted, private to you") },
-                { icon: "target", t: l("目标智能调整", "Adaptive goals") },
-              ].map((x) => (
-                <span key={x.t.en} className="flex items-center gap-2 rounded-full bg-canvas px-4 py-2 font-medium text-ink/75">
-                  <Icon name={x.icon} className="h-4 w-4 text-teal-deep" />
-                  {tr(x.t)}
-                </span>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <div className="rounded-3xl bg-canvas p-6 sm:p-8">
-              <div className="flex items-center justify-between">
-                <p className="text-sm font-semibold">{tr(l("今日能量收支", "Today's energy balance"))}</p>
-                <span className="rounded-full bg-white px-3 py-1 text-xs text-muted">{tr(l("截至 18:30", "As of 18:30"))}</span>
-              </div>
-
-              {[
-                { label: l("摄入（App · AI 识餐）", "Intake (App · AI scan)"), v: intake, color: "bg-mint", parts: null },
-                {
-                  label: l("消耗（VK 戒指）", "Burn (VK ring)"),
-                  v: burn,
-                  color: "",
-                  parts: [
-                    { v: bmr, color: "bg-sky", label: l("基础代谢", "Basal") },
-                    { v: active, color: "bg-heart", label: l("活动", "Active") },
-                  ],
-                },
-              ].map((row) => (
-                <div key={row.label.en} className="mt-6">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted">{tr(row.label)}</span>
-                    <span className="font-bold tabular-nums">{row.v.toLocaleString()} kcal</span>
-                  </div>
-                  <div className="mt-2 flex h-4 overflow-hidden rounded-full bg-white">
-                    {row.parts ? (
-                      row.parts.map((p) => <div key={p.label.en} className={`h-full ${p.color}`} style={{ width: `${(p.v / max) * 100}%` }} />)
-                    ) : (
-                      <div className={`h-full rounded-full ${row.color}`} style={{ width: `${(row.v / max) * 100}%` }} />
-                    )}
-                  </div>
-                  {row.parts && (
-                    <div className="mt-2 flex gap-4 text-[11px] text-muted">
-                      {row.parts.map((p) => (
-                        <span key={p.label.en} className="flex items-center gap-1.5">
-                          <span className={`h-2 w-2 rounded-full ${p.color}`} />
-                          {tr(p.label)} {p.v.toLocaleString()}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              <div className="mt-8 flex items-center justify-between gap-4 rounded-2xl bg-white p-5">
-                <div>
-                  <p className="text-xs text-muted">{tr(l("能量缺口", "Energy deficit"))}</p>
-                  <p className="whitespace-nowrap text-2xl font-extrabold tabular-nums text-teal-deep sm:text-3xl">{net.toLocaleString()} <span className="text-base">kcal</span></p>
-                </div>
-                <p className="max-w-[12rem] text-right text-xs leading-relaxed text-muted">
-                  {tr(l("处于健康减脂区间，晚餐建议控制在 500 kcal 以内。", "In a healthy fat-loss range — aim to keep dinner under 500 kcal."))}
-                </p>
-              </div>
-            </div>
-          </Reveal>
+          </div>
+          <Link href="/devices" className="inline-flex shrink-0 items-center gap-2 font-semibold text-teal-deep hover:underline">
+            {tr(l("全部设备与对比", "All devices & comparison"))}
+            <Icon name="arrow" className="h-4 w-4" />
+          </Link>
+        </Reveal>
+        <div className="mt-10">
+          <DevicesShowcase />
         </div>
       </div>
     </section>
@@ -375,11 +312,15 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Marquee />
-      <Products />
+      <Loop />
+      <Features />
       <Vitals />
-      <AiCalories />
+      <Nutrition />
       <EnergyBalance />
+      <Devices />
+      <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8">
+        <HealthDeviceNote />
+      </section>
       <AppDownload />
       <ContactSection />
     </>

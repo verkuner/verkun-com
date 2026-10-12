@@ -7,15 +7,15 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   metadataBase: new URL("https://verkun.com"),
   title: {
-    default: "VERKUN 凡鲲 | 智能戒指 · AI 饮食热量识别",
+    default: "VERKUN 凡鲲 | 用真实体征，管理你的健康",
     template: "%s | VERKUN 凡鲲",
   },
   description:
-    "VERKUN 凡鲲智能戒指 VK100 / VK35 Pro：24 小时心率、血氧、睡眠与压力监测；搭配 AI 拍照识别食物热量 App，完整掌握能量摄入与消耗。",
-  keywords: ["智能戒指", "VK100", "VK35 Pro", "AI 热量识别", "食物卡路里", "健康监测", "睡眠监测", "凡鲲", "Verkun"],
+    "VERKUN Health App 汇聚智能设备 24 小时记录的心率、血氧、睡眠、HRV 与活动数据，结合 AI 拍照识别饮食热量，用真实体征管理你的健康。健康设备，非医疗器械。",
+  keywords: ["健康管理 App", "真实体征", "AI 热量识别", "食物卡路里", "智能戒指", "VK100", "VK35 Pro", "睡眠分析", "凡鲲", "Verkun"],
   openGraph: {
-    title: "VERKUN 凡鲲 — 戴在指尖的健康智能",
-    description: "智能戒指 + AI 饮食热量识别，健康管理轻到无感、准到可信。",
+    title: "VERKUN 凡鲲 — 用真实体征，管理你的健康",
+    description: "VERKUN Health App + 智能设备：真实体征数据、AI 饮食热量识别与个性化健康建议。",
     type: "website",
     url: "https://verkun.com",
   },
