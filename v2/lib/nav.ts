@@ -22,7 +22,7 @@ export const yourHealth: Chapter[] = [
     href: "/health-radar",
     icon: "target",
     tone: "bg-teal-soft text-teal-deep",
-    title: l("认识 Health Radar", "Meet Health Radar"),
+    title: l("认识健康雷达", "Meet Health Radar"),
     desc: l("你的健康管理 App", "Your health app"),
   },
 ];

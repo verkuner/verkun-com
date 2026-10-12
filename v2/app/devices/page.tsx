@@ -25,7 +25,7 @@ export default function DevicesPage() {
             <p className="mt-5 text-lg text-muted">
               {tr(
                 l(
-                  "VERKUN 智能设备全天候记录心率、血氧、睡眠、体温与活动，自动同步到 Health Radar App，成为你健康管理的数据来源。",
+                  "VERKUN 智能设备全天候记录心率、血氧、睡眠、体温与活动，自动同步到健康雷达 App，成为你健康管理的数据来源。",
                   "VERKUN devices record heart rate, SpO₂, sleep, temperature and activity around the clock and sync automatically to the Health Radar app — the data source for managing your health."
                 )
               )}
@@ -56,7 +56,7 @@ export default function DevicesPage() {
           <p className="mx-auto mt-4 max-w-xl text-muted">
             {tr(
               l(
-                "VK100 轻盈日常，VK35 Pro 续航更长、功能更全。两者都完整支持 Health Radar App 的全部功能。",
+                "VK100 轻盈日常，VK35 Pro 续航更长、功能更全。两者都完整支持健康雷达 App 的全部功能。",
                 "VK100 is light and everyday; VK35 Pro adds battery and features. Both unlock every feature of the Health Radar app."
               )
             )}

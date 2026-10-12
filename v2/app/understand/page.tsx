@@ -49,7 +49,7 @@ const vitals = [
     tone: "bg-heart-soft text-heart",
     name: l("活动与能量消耗", "Activity & energy burn"),
     what: l("步数、运动时长与身体消耗的能量。", "Steps, workout time and the energy your body burns."),
-    why: l("配合 Health Radar 的饮食记录，看清每天的能量收支。", "Paired with Health Radar's food log, it shows your daily energy balance."),
+    why: l("配合健康雷达的饮食记录，看清每天的能量收支。", "Paired with Health Radar's food log, it shows your daily energy balance."),
   },
 ];
 
@@ -152,7 +152,7 @@ export default function UnderstandPage() {
             <p className="mt-5 text-muted">
               {tr(
                 l(
-                  "每个人的身体都不一样。Health Radar 用你最近几周的数据建立个人基线，当某个指标偏离你的常态时，你会第一时间看到——这比任何“标准值”都更有意义。",
+                  "每个人的身体都不一样。健康雷达用你最近几周的数据建立个人基线，当某个指标偏离你的常态时，你会第一时间看到——这比任何“标准值”都更有意义。",
                   "Every body is different. Health Radar builds your personal baseline from recent weeks, so when a signal drifts from your normal you see it straight away — far more meaningful than any one-size-fits-all number."
                 )
               )}
@@ -205,7 +205,7 @@ export default function UnderstandPage() {
               {tr(l("所有信号，汇成一张全景图", "All your signals, one clear picture"))}
             </h2>
             <p className="mt-4 text-white/60">
-              {tr(l("在 Health Radar 中，这些体征随时可查，并按日、周、月呈现趋势。", "In Health Radar these vitals are always at hand, with daily, weekly and monthly trends."))}
+              {tr(l("在健康雷达中，这些体征随时可查，并按日、周、月呈现趋势。", "In Health Radar these vitals are always at hand, with daily, weekly and monthly trends."))}
             </p>
           </Reveal>
           <div className="mt-12">
@@ -214,7 +214,7 @@ export default function UnderstandPage() {
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
             <p className="text-xs text-white/35">{tr(l("* 界面数据为示意。", "* Figures shown are illustrative."))}</p>
             <Link href="/health-radar" className="inline-flex items-center gap-2 rounded-full bg-teal px-6 py-3 text-sm font-semibold text-white hover:bg-teal-deep">
-              {tr(l("认识 Health Radar", "Meet Health Radar"))}
+              {tr(l("认识健康雷达", "Meet Health Radar"))}
               <Icon name="arrow" className="h-4 w-4" />
             </Link>
           </div>

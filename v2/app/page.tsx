@@ -13,27 +13,27 @@ import AppDownload from "@/components/AppDownload";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 
-function Hero() {
+function RadarSummary() {
   const { tr } = useLang();
   return (
-    <section className="hero-glow relative overflow-hidden pt-28 pb-20 sm:pt-32">
+    <section className="hero-glow relative overflow-hidden border-t border-line py-24">
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="reveal in-view">
           <span className="inline-flex items-center gap-2 rounded-full border border-teal/25 bg-white/80 px-3.5 py-1.5 text-xs font-semibold text-teal-deep">
             <span className="relative h-2 w-2 rounded-full bg-teal text-teal vk-pulse" />
-            {tr(l("Health Radar App · 全新上线", "Health Radar App · now live"))}
+            {tr(l("健康雷达 App · 全新上线", "Health Radar App · now live"))}
           </span>
-          <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-[4.2rem]">
+          <h2 className="mt-6 text-[2.4rem] font-extrabold leading-[1.08] tracking-tight sm:text-6xl">
             {tr(l("用真实体征，", "Manage your health"))}
             <br />
             <span className="bg-gradient-to-r from-teal-deep via-teal to-sky bg-clip-text text-transparent">
               {tr(l("管理你的健康", "with your real vitals"))}
             </span>
-          </h1>
+          </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
             {tr(
               l(
-                "Health Radar App 汇聚智能设备 24 小时记录的心率、血氧、睡眠、压力与活动，再加上 AI 拍照识别饮食热量，把你身体的真实信号，变成每天可执行的健康行动。",
+                "健康雷达 App 汇聚智能设备 24 小时记录的心率、血氧、睡眠、压力与活动，再加上 AI 拍照识别饮食热量，把你身体的真实信号，变成每天可执行的健康行动。",
                 "Health Radar brings together the heart rate, SpO₂, sleep, stress and activity your device records around the clock — plus AI photo-based calorie tracking — and turns your body's real signals into health actions you can take every day."
               )
             )}
@@ -50,7 +50,7 @@ function Hero() {
               href="/health-radar"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-white px-7 py-3.5 font-semibold text-ink transition-colors hover:border-teal"
             >
-              {tr(l("认识 Health Radar", "Meet Health Radar"))}
+              {tr(l("认识健康雷达", "Meet Health Radar"))}
             </Link>
           </div>
           <ul className="mt-10 flex max-w-xl flex-wrap gap-x-6 gap-y-3 text-sm text-ink/75">
@@ -89,7 +89,17 @@ function Hero() {
   );
 }
 
-function ChapterHead({ index, dark = false, children }: { index: number; dark?: boolean; children?: React.ReactNode }) {
+function ChapterHead({
+  index,
+  dark = false,
+  first = false,
+  children,
+}: {
+  index: number;
+  dark?: boolean;
+  first?: boolean;
+  children?: React.ReactNode;
+}) {
   const { tr } = useLang();
   const c = yourHealth[index];
   return (
@@ -98,7 +108,11 @@ function ChapterHead({ index, dark = false, children }: { index: number; dark?: 
         <p className={`eyebrow ${dark ? "!text-teal" : ""}`}>
           {tr(l("你的健康", "Your Health"))} · 0{index + 1}
         </p>
-        <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">{tr(c.title)}</h2>
+        {first ? (
+          <h1 className="mt-4 text-[2.6rem] font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl">{tr(c.title)}</h1>
+        ) : (
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">{tr(c.title)}</h2>
+        )}
         {children && <div className={`mt-4 text-lg ${dark ? "text-white/60" : "text-muted"}`}>{children}</div>}
       </div>
       <Link
@@ -122,9 +136,9 @@ function WearChapter() {
     { icon: "battery", t: l("告别每日充电", "No daily charging"), d: l("续航 7 天起，搭配充电仓最长约 60 天。", "From 7 days per charge, up to ~60 days with the case.") },
   ];
   return (
-    <section className="border-t border-line bg-white py-24">
+    <section className="hero-glow pt-28 pb-24 sm:pt-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <ChapterHead index={0}>
+        <ChapterHead index={0} first>
           {tr(
             l(
               "一枚智能戒指，陪你度过每个 24 小时——工作、运动、入睡，安静地记录身体的每一个真实信号。",
@@ -237,7 +251,7 @@ function Devices() {
             <p className="eyebrow">{tr(l("智能设备", "Devices"))}</p>
             <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">{tr(l("选择你的数据来源", "Choose your data source"))}</h2>
             <p className="mt-3 text-muted">
-              {tr(l("佩戴任意一款 VERKUN 智能设备，即可解锁 Health Radar 的全部体征功能。", "Wear any VERKUN device to unlock every vitals feature in Health Radar."))}
+              {tr(l("佩戴任意一款 VERKUN 智能设备，即可解锁健康雷达的全部体征功能。", "Wear any VERKUN device to unlock every vitals feature in Health Radar."))}
             </p>
           </div>
           <Link href="/devices" className="inline-flex shrink-0 items-center gap-2 font-semibold text-teal-deep hover:underline">
@@ -256,10 +270,10 @@ function Devices() {
 export default function Home() {
   return (
     <>
-      <Hero />
       <WearChapter />
       <UnderstandChapter />
       <RadarChapter />
+      <RadarSummary />
       <Devices />
       <div className="py-24">
         <AppDownload />

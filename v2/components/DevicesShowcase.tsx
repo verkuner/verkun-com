@@ -54,7 +54,7 @@ export default function DevicesShowcase() {
                     <Icon name="spark" className="h-6 w-6" />
                   </span>
                   <p className="mt-4 font-bold">{tr(l("更多智能健康设备", "More health devices"))}</p>
-                  <p className="mt-1 text-sm text-muted">{tr(l("敬请期待，都将接入 Health Radar App", "Coming soon — all connected to Health Radar"))}</p>
+                  <p className="mt-1 text-sm text-muted">{tr(l("敬请期待，都将接入健康雷达 App", "Coming soon — all connected to Health Radar"))}</p>
                 </div>
               </Reveal>
             </div>

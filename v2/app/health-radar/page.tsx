@@ -173,7 +173,7 @@ function Reports() {
         eyebrow={l("建议与报告", "Guidance & reports")}
         title={l("让数据变成习惯", "Turn data into habits")}
         desc={l(
-          "知道数字只是开始。Health Radar 用建议、报告和提醒，帮你把健康目标落实到每一天。",
+          "知道数字只是开始。健康雷达用建议、报告和提醒，帮你把健康目标落实到每一天。",
           "Knowing the numbers is just the start. Health Radar uses guidance, reports and reminders to turn goals into daily habits."
         )}
       />
@@ -206,7 +206,7 @@ export default function AppPage() {
             <h1 className="mt-5 text-[2.5rem] font-extrabold leading-[1.1] tracking-tight sm:text-6xl">
               {tr(l("认识", "Meet"))}
               <br />
-              <span className="bg-gradient-to-r from-teal-deep via-teal to-sky bg-clip-text text-transparent">Health Radar</span>
+              <span className="bg-gradient-to-r from-teal-deep via-teal to-sky bg-clip-text text-transparent">{tr(l("健康雷达", "Health Radar"))}</span>
             </h1>
             <p className="mt-4 text-xl font-bold text-ink/85">{tr(l("你的健康，有真实数据可依", "Your health, backed by real data"))}</p>
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
