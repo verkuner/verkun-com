@@ -11,11 +11,11 @@ export const metadata: Metadata = {
     template: "%s | VERKUN 凡鲲",
   },
   description:
-    "VERKUN Health App 汇聚智能设备 24 小时记录的心率、血氧、睡眠、HRV 与活动数据，结合 AI 拍照识别饮食热量，用真实体征管理你的健康。健康设备，非医疗器械。",
+    "Health Radar App 汇聚智能设备 24 小时记录的心率、血氧、睡眠、HRV 与活动数据，结合 AI 拍照识别饮食热量，用真实体征管理你的健康。",
   keywords: ["健康管理 App", "真实体征", "AI 热量识别", "食物卡路里", "智能戒指", "VK100", "VK35 Pro", "睡眠分析", "凡鲲", "Verkun"],
   openGraph: {
     title: "VERKUN 凡鲲 — 用真实体征，管理你的健康",
-    description: "VERKUN Health App + 智能设备：真实体征数据、AI 饮食热量识别与个性化健康建议。",
+    description: "Health Radar App + 智能设备：真实体征数据、AI 饮食热量识别与个性化健康建议。",
     type: "website",
     url: "https://verkun.com",
   },

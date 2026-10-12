@@ -4,7 +4,6 @@ import Link from "next/link";
 import { l, useLang } from "@/lib/i18n";
 import DevicesShowcase from "@/components/DevicesShowcase";
 import CompareTable from "@/components/CompareTable";
-import HealthDeviceNote from "@/components/HealthDeviceNote";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 import { useHashScroll } from "@/lib/useHashScroll";
@@ -26,8 +25,8 @@ export default function DevicesPage() {
             <p className="mt-5 text-lg text-muted">
               {tr(
                 l(
-                  "VERKUN 智能设备全天候记录心率、血氧、睡眠、体温与活动，自动同步到 VERKUN Health App，成为你健康管理的数据来源。",
-                  "VERKUN devices record heart rate, SpO₂, sleep, temperature and activity around the clock and sync automatically to the VERKUN Health app — the data source for managing your health."
+                  "VERKUN 智能设备全天候记录心率、血氧、睡眠、体温与活动，自动同步到 Health Radar App，成为你健康管理的数据来源。",
+                  "VERKUN devices record heart rate, SpO₂, sleep, temperature and activity around the clock and sync automatically to the Health Radar app — the data source for managing your health."
                 )
               )}
             </p>
@@ -36,7 +35,7 @@ export default function DevicesPage() {
                 {tr(l("设备对比", "Compare devices"))}
                 <Icon name="arrow" className="h-4 w-4" />
               </Link>
-              <Link href="/app" className="rounded-full border border-line bg-white px-5 py-2.5 font-semibold hover:border-teal">
+              <Link href="/health-radar" className="rounded-full border border-line bg-white px-5 py-2.5 font-semibold hover:border-teal">
                 {tr(l("了解 App 功能", "See what the app does"))}
               </Link>
             </div>
@@ -57,8 +56,8 @@ export default function DevicesPage() {
           <p className="mx-auto mt-4 max-w-xl text-muted">
             {tr(
               l(
-                "VK100 轻盈日常，VK35 Pro 续航更长、功能更全。两者都完整支持 VERKUN Health App 的全部功能。",
-                "VK100 is light and everyday; VK35 Pro adds battery and features. Both unlock every feature of the VERKUN Health app."
+                "VK100 轻盈日常，VK35 Pro 续航更长、功能更全。两者都完整支持 Health Radar App 的全部功能。",
+                "VK100 is light and everyday; VK35 Pro adds battery and features. Both unlock every feature of the Health Radar app."
               )
             )}
           </p>
@@ -68,9 +67,6 @@ export default function DevicesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
-        <HealthDeviceNote />
-      </section>
     </>
   );
 }

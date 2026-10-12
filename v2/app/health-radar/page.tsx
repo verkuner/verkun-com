@@ -7,10 +7,10 @@ import PhoneDemo from "@/components/PhoneDemo";
 import AppDownload from "@/components/AppDownload";
 import VitalsBoard from "@/components/VitalsBoard";
 import EnergyBalance from "@/components/EnergyBalance";
-import HealthDeviceNote from "@/components/HealthDeviceNote";
 import Icon from "@/components/Icon";
 import Reveal from "@/components/Reveal";
 import { useHashScroll } from "@/lib/useHashScroll";
+import ChapterNav from "@/components/ChapterNav";
 
 const sections = [
   { id: "vitals", label: l("体征看板", "Vitals") },
@@ -173,8 +173,8 @@ function Reports() {
         eyebrow={l("建议与报告", "Guidance & reports")}
         title={l("让数据变成习惯", "Turn data into habits")}
         desc={l(
-          "知道数字只是开始。VERKUN Health 用建议、报告和提醒，帮你把健康目标落实到每一天。",
-          "Knowing the numbers is just the start. VERKUN Health uses guidance, reports and reminders to turn goals into daily habits."
+          "知道数字只是开始。Health Radar 用建议、报告和提醒，帮你把健康目标落实到每一天。",
+          "Knowing the numbers is just the start. Health Radar uses guidance, reports and reminders to turn goals into daily habits."
         )}
       />
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -202,13 +202,14 @@ export default function AppPage() {
       <section className="hero-glow pt-28 pb-16 sm:pt-32">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_auto]">
           <div className="reveal in-view">
-            <p className="eyebrow">VERKUN Health App</p>
+            <p className="eyebrow">{tr(l("你的健康 · 03", "Your Health · 03"))}</p>
             <h1 className="mt-5 text-[2.5rem] font-extrabold leading-[1.1] tracking-tight sm:text-6xl">
-              {tr(l("你的健康，", "Your health,"))}
+              {tr(l("认识", "Meet"))}
               <br />
-              <span className="text-teal-deep">{tr(l("有真实数据可依", "backed by real data"))}</span>
+              <span className="bg-gradient-to-r from-teal-deep via-teal to-sky bg-clip-text text-transparent">Health Radar</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+            <p className="mt-4 text-xl font-bold text-ink/85">{tr(l("你的健康，有真实数据可依", "Your health, backed by real data"))}</p>
+            <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
               {tr(
                 l(
                   "连接 VERKUN 智能设备，App 持续接收你的心率、血氧、睡眠、HRV 与活动数据；拍照记录饮食，AI 计算热量与营养。所有数据汇聚成一张清晰的健康全景图，并告诉你下一步怎么做。",
@@ -301,12 +302,11 @@ export default function AppPage() {
       <Reports />
 
       <section className="mx-auto max-w-7xl px-5 pb-20 sm:px-8">
-        <HealthDeviceNote />
-        <p className="mx-auto mt-6 max-w-3xl text-center text-xs leading-relaxed text-muted">
+        <p className="mx-auto max-w-3xl text-center text-xs leading-relaxed text-muted">
           {tr(
             l(
-              "AI 热量识别结果为基于图像的估算，可能与实际存在偏差，建议作为饮食管理参考。如有特殊饮食需求，请遵循医生或注册营养师的指导。",
-              "AI calorie results are image-based estimates and may differ from actual values — use them as a guide. For special dietary needs, follow the advice of your doctor or a registered dietitian."
+              "AI 热量识别结果为基于图像的估算，可能与实际存在偏差，建议作为饮食管理参考。",
+              "AI calorie results are image-based estimates and may differ from actual values — use them as a guide."
             )
           )}
         </p>
@@ -315,6 +315,8 @@ export default function AppPage() {
       <div className="pb-24">
         <AppDownload />
       </div>
+
+      <ChapterNav current="/health-radar" />
     </>
   );
 }

@@ -13,9 +13,12 @@ const LangContext = createContext<Ctx | null>(null);
 export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>("zh");
 
+  // Chinese is the default for every new visit; an EN choice only lasts for the
+  // current browsing session (sessionStorage), not forever.
   useEffect(() => {
     try {
-      const saved = window.localStorage.getItem("vk-lang");
+      window.localStorage.removeItem("vk-lang"); // clear choices saved by earlier versions
+      const saved = window.sessionStorage.getItem("vk-lang");
       if (saved === "zh" || saved === "en") setLang(saved);
     } catch {}
   }, []);
@@ -23,7 +26,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
     try {
-      window.localStorage.setItem("vk-lang", lang);
+      window.sessionStorage.setItem("vk-lang", lang);
     } catch {}
   }, [lang]);
 

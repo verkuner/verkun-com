@@ -5,14 +5,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { l, useLang } from "@/lib/i18n";
 import { categories, devices } from "@/lib/devices";
+import { yourHealth } from "@/lib/nav";
 import RingVisual from "./RingVisual";
 import Icon from "./Icon";
 
-const links = [
-  { href: "/app", label: l("App 功能", "The App") },
-  { href: "/app#nutrition", label: l("AI 饮食识别", "AI Nutrition") },
-  { href: "/#contact", label: l("联系我们", "Contact") },
-];
+type MenuKey = "health" | "devices";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
@@ -22,6 +19,27 @@ export function Logo({ light = false }: { light?: boolean }) {
       </span>
       <span className={`text-lg font-extrabold tracking-[0.18em] ${light ? "text-white" : "text-ink"}`}>VERKUN</span>
     </span>
+  );
+}
+
+function HealthMenu({ onNavigate }: { onNavigate: () => void }) {
+  const { tr } = useLang();
+  return (
+    <div className="w-[420px] rounded-3xl border border-line bg-white p-3 shadow-[0_24px_60px_-20px_rgba(15,34,48,0.35)]">
+      {yourHealth.map((c, i) => (
+        <Link key={c.href} href={c.href} onClick={onNavigate} className="flex items-center gap-4 rounded-2xl p-3 transition-colors hover:bg-canvas">
+          <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-2xl ${c.tone}`}>
+            <Icon name={c.icon} className="h-5 w-5" />
+          </span>
+          <span className="flex-1">
+            <span className="block text-[11px] font-bold text-muted">0{i + 1}</span>
+            <span className="block font-bold leading-snug">{tr(c.title)}</span>
+            <span className="block text-xs text-muted">{tr(c.desc)}</span>
+          </span>
+          <Icon name="arrow" className="h-4 w-4 text-muted" />
+        </Link>
+      ))}
+    </div>
   );
 }
 
@@ -37,12 +55,7 @@ function DevicesMenu({ onNavigate }: { onNavigate: () => void }) {
               {devices
                 .filter((d) => d.category === cat.key)
                 .map((d) => (
-                  <Link
-                    key={d.slug}
-                    href={`/devices/${d.slug}`}
-                    onClick={onNavigate}
-                    className="flex items-center gap-3 rounded-2xl p-2 transition-colors hover:bg-canvas"
-                  >
+                  <Link key={d.slug} href={`/devices/${d.slug}`} onClick={onNavigate} className="flex items-center gap-3 rounded-2xl p-2 transition-colors hover:bg-canvas">
                     <span className="grid h-12 w-12 place-items-center rounded-xl bg-canvas">
                       <RingVisual finish={d.finishes[0]} shadow={false} sensor={false} className="h-10" />
                     </span>
@@ -72,13 +85,21 @@ function DevicesMenu({ onNavigate }: { onNavigate: () => void }) {
   );
 }
 
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden>
+      <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function Nav() {
   const { tr, lang, toggle } = useLang();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [menu, setMenu] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [menu, setMenu] = useState<MenuKey | null>(null);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -89,14 +110,14 @@ export default function Nav() {
 
   useEffect(() => {
     setOpen(false);
-    setMenu(false);
+    setMenu(null);
   }, [pathname]);
 
   useEffect(() => {
     if (!menu) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenu(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenu(null);
     const onClick = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenu(false);
+      if (barRef.current && !barRef.current.contains(e.target as Node)) setMenu(null);
     };
     window.addEventListener("keydown", onKey);
     window.addEventListener("mousedown", onClick);
@@ -106,9 +127,20 @@ export default function Nav() {
     };
   }, [menu]);
 
-  const onDevices = pathname.startsWith("/devices");
-  const linkCls = (active: boolean) =>
-    `rounded-full px-4 py-2 text-sm font-medium transition-colors ${active ? "bg-teal-soft text-teal-deep" : "text-ink/70 hover:text-ink"}`;
+  const inHealth = yourHealth.some((c) => pathname === c.href);
+  const inDevices = pathname.startsWith("/devices");
+  const pill = (active: boolean) =>
+    `flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-colors ${active ? "bg-teal-soft text-teal-deep" : "text-ink/70 hover:text-ink"}`;
+
+  const dropdown = (key: MenuKey, label: string, active: boolean, panel: React.ReactNode) => (
+    <div className="relative" onMouseEnter={() => setMenu(key)} onMouseLeave={() => setMenu(null)}>
+      <button onClick={() => setMenu((m) => (m === key ? null : key))} aria-expanded={menu === key} aria-haspopup="true" className={pill(active)}>
+        {label}
+        <Chevron open={menu === key} />
+      </button>
+      {menu === key && <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3">{panel}</div>}
+    </div>
+  );
 
   return (
     <header
@@ -121,35 +153,12 @@ export default function Nav() {
           <Logo />
         </Link>
 
-        <div className="hidden items-center gap-1 lg:flex">
-          <Link href={links[0].href} className={linkCls(pathname === "/app")}>
-            {tr(links[0].label)}
+        <div ref={barRef} className="hidden items-center gap-1 lg:flex">
+          {dropdown("health", tr(l("你的健康", "Your Health")), inHealth, <HealthMenu onNavigate={() => setMenu(null)} />)}
+          {dropdown("devices", tr(l("智能设备", "Devices")), inDevices, <DevicesMenu onNavigate={() => setMenu(null)} />)}
+          <Link href="/#contact" className={pill(false)}>
+            {tr(l("联系我们", "Contact"))}
           </Link>
-
-          <div ref={menuRef} className="relative" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>
-            <button
-              onClick={() => setMenu((v) => !v)}
-              aria-expanded={menu}
-              aria-haspopup="true"
-              className={`${linkCls(onDevices)} flex items-center gap-1`}
-            >
-              {tr(l("智能设备", "Devices"))}
-              <svg viewBox="0 0 12 12" className={`h-3 w-3 transition-transform ${menu ? "rotate-180" : ""}`} aria-hidden>
-                <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-              </svg>
-            </button>
-            {menu && (
-              <div className="absolute left-1/2 top-full -translate-x-1/2 pt-3">
-                <DevicesMenu onNavigate={() => setMenu(false)} />
-              </div>
-            )}
-          </div>
-
-          {links.slice(1).map((item) => (
-            <Link key={item.href} href={item.href} className={linkCls(false)}>
-              {tr(item.label)}
-            </Link>
-          ))}
         </div>
 
         <div className="flex items-center gap-2">
@@ -160,10 +169,7 @@ export default function Nav() {
           >
             {lang === "zh" ? "EN" : "中文"}
           </button>
-          <Link
-            href="/app#download"
-            className="hidden rounded-full bg-ink px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-deep sm:inline-block"
-          >
+          <Link href="/health-radar#download" className="hidden rounded-full bg-ink px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-deep sm:inline-block">
             {tr(l("下载 App", "Get the App"))}
           </Link>
           <button
@@ -183,9 +189,16 @@ export default function Nav() {
 
       {open && (
         <div className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-line bg-white px-5 pb-5 lg:hidden">
-          <Link href="/app" className="block border-b border-line py-3.5 font-medium text-ink/80">
-            {tr(links[0].label)}
-          </Link>
+          <div className="border-b border-line py-3.5">
+            <p className="font-medium text-ink/80">{tr(l("你的健康", "Your Health"))}</p>
+            <div className="mt-2 grid gap-1 pl-3">
+              {yourHealth.map((c) => (
+                <Link key={c.href} href={c.href} className="py-1.5 text-sm text-ink/65">
+                  {tr(c.title)}
+                </Link>
+              ))}
+            </div>
+          </div>
           <div className="border-b border-line py-3.5">
             <Link href="/devices" className="font-medium text-ink/80">
               {tr(l("智能设备", "Devices"))}
@@ -201,12 +214,10 @@ export default function Nav() {
               </Link>
             </div>
           </div>
-          {links.slice(1).map((item) => (
-            <Link key={item.href} href={item.href} className="block border-b border-line py-3.5 font-medium text-ink/80">
-              {tr(item.label)}
-            </Link>
-          ))}
-          <Link href="/app#download" className="mt-4 block rounded-full bg-ink py-3 text-center font-semibold text-white">
+          <Link href="/#contact" className="block border-b border-line py-3.5 font-medium text-ink/80">
+            {tr(l("联系我们", "Contact"))}
+          </Link>
+          <Link href="/health-radar#download" className="mt-4 block rounded-full bg-ink py-3 text-center font-semibold text-white">
             {tr(l("下载 App", "Get the App"))}
           </Link>
         </div>

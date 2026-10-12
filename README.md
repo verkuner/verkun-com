@@ -13,17 +13,19 @@ nginx terminates TLS and routes `/v1` → `:3001`, everything else → `:3000`.
 
 ## v2 pages
 
+Navigation: **你的健康 Your Health ▾** (three chapters) · **智能设备 Devices ▾** · **联系我们 Contact**.
+
 | Route | Page |
 |---|---|
-| `/` | Home (App-first) — "用真实体征，管理你的健康": app dashboard hero, capture → understand → act loop, app features, vitals board, AI meal-scan demo, energy balance, devices, health-device positioning, download, contact |
-| `/app` | App deep-dive with anchors `#vitals` `#sleep` `#nutrition` `#energy` `#reports` `#download` |
-| `/devices` | Devices hub — every device grouped by category, plus `#compare` table |
-| `/devices/vk100`, `/devices/vk35pro` | Device pages — finish & size picker, highlights, specs, in-the-box |
+| `/` | Home — hero plus the three Your Health chapters, devices, download, contact |
+| `/wear` | 01 · Wear your best life — the ring as an everyday companion ("a day with your ring") |
+| `/understand` | 02 · Understand your body. Own your health. — what each vital means, personal baseline |
+| `/health-radar` | 03 · Meet Health Radar — the app: vitals, sleep & recovery, AI calorie recognition, energy balance, guidance (`/app` redirects here) |
+| `/devices` | Devices hub — every device by category, plus `#compare` |
+| `/devices/vk100`, `/devices/vk35pro` | Device pages |
 | `/api/contact` | Contact form endpoint (logs leads; wire up email/CRM here) |
 
-Device content lives in [`v2/lib/devices.ts`](v2/lib/devices.ts). **Adding a device:** append it to `devices`; for a new kind of device (e.g. a watch), add a `categories` entry too — the 智能设备 nav menu, footer, devices hub and static pages all pick it up automatically. Every string is bilingual (zh/en).
-
-Positioning: VERKUN devices and the app are **health (wellness) devices, not medical devices** — copy avoids diagnostic or medical-grade claims, and the footer/`HealthDeviceNote` say so explicitly.
+The Your Health menu is defined once in [`v2/lib/nav.ts`](v2/lib/nav.ts). Device content lives in [`v2/lib/devices.ts`](v2/lib/devices.ts) — append to `devices` (and `categories` for a new kind of device) and the nav, footer, devices hub and static pages pick it up. Every string is bilingual (zh/en).
 
 ## Develop
 

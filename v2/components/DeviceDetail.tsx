@@ -145,7 +145,7 @@ export default function DeviceDetail({ ring }: { ring: Device }) {
                 </p>
               </div>
             </div>
-            <Link href="/app" className="shrink-0 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white hover:bg-teal-deep">
+            <Link href="/health-radar" className="shrink-0 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white hover:bg-teal-deep">
               {tr(l("了解 App", "See the app"))}
             </Link>
           </div>
