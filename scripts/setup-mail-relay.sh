@@ -18,7 +18,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y -qq postfix libsasl2-modules m
 
 postconf -e \
   "myhostname = vm.verkun.com" \
-  "myorigin = verkun.com" \
+  "myorigin = vm.verkun.com" \
   "mydestination = vm.verkun.com, localhost.localdomain, localhost" \
   "inet_interfaces = loopback-only" \
   "inet_protocols = ipv4" \
@@ -31,10 +31,14 @@ postconf -e \
   "smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd" \
   "smtp_sasl_security_options = noanonymous" \
   "smtp_sasl_tls_security_options = noanonymous" \
-  "sender_canonical_maps = regexp:/etc/postfix/sender_canonical"
+  "sender_canonical_maps = regexp:/etc/postfix/sender_canonical" \
+  "soft_bounce = yes"
 
-# Feishu only accepts mail whose sender is the authenticated mailbox.
-echo "/.+/ $MAILBOX" > /etc/postfix/sender_canonical
+# Feishu only accepts mail whose sender is the authenticated mailbox, so local
+# system senders (root@vm.verkun.com, ...) are rewritten to it. Bounce notices
+# keep their null sender: rewriting those too makes undeliverable bounces loop.
+# soft_bounce keeps rejected mail queued for retry instead of bouncing it.
+printf '%s %s\n' '/@vm\.verkun\.com$/' "$MAILBOX" > /etc/postfix/sender_canonical
 
 # Password helper: prompts without echo, stores root-only, sends a test mail.
 cat > /usr/local/sbin/verkun-mail-password <<EOF
@@ -46,6 +50,7 @@ printf '%s %s:%s\n' '$RELAY' '$MAILBOX' "\$PW" > /etc/postfix/sasl_passwd
 postmap /etc/postfix/sasl_passwd
 chmod 600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
 systemctl reload postfix
+postqueue -f  # send anything that was waiting for the password
 printf 'Subject: VERKUN mail relay test\nFrom: $MAILBOX\nTo: $MAILBOX\n\nPostfix on the VM can send through Feishu Mail.\n' | sendmail -f $MAILBOX $MAILBOX
 echo "Saved. Test mail queued to $MAILBOX — check: sudo tail -n 20 /var/log/mail.log"
 EOF
