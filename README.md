@@ -1,78 +1,40 @@
-# Verkun — Enterprise AI Platform Website
+# verkun.com
 
-Official marketing website for **Beijing Verkun Intelligent Technology Co., Ltd. (北京凡鲲智能科技有限公司)**, built with Next.js 16 and Tailwind CSS 4.
+Website for **北京凡鲲智能科技有限公司 (Beijing Verkun Intelligent Technology Co., Ltd.)**.
 
-## Tech Stack
+The repo holds two independent Next.js 16 apps:
 
-| Layer | Choice |
+| App | Served at | Port | What it is |
+|---|---|---|---|
+| [`v2/`](v2) | `https://verkun.com/` | 3000 | **Current site** — VK100 / VK35 Pro smart rings and the AI food-calorie app. Health-tech theme. |
+| [`v1/`](v1) | `https://verkun.com/v1` | 3001 | **Archived** first-generation enterprise-AI site (`basePath: "/v1"`). |
+
+nginx terminates TLS and routes `/v1` → `:3001`, everything else → `:3000`.
+
+## v2 pages
+
+| Route | Page |
 |---|---|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript 5.7 |
-| Styling | Tailwind CSS 4 |
-| Runtime | React 19 |
+| `/` | Home — hero, ring family, 24h vitals dashboard, interactive AI meal-scan demo, energy balance, app download, contact |
+| `/rings/vk100`, `/rings/vk35pro` | Product pages — finish & size picker, highlights, full specs, in-the-box |
+| `/compare` | VK100 vs VK35 Pro comparison table |
+| `/app` | AI nutrition app — scan demo, features, dashboard |
+| `/api/contact` | Contact form endpoint (logs leads; wire up email/CRM here) |
 
-## Features
+Content lives in [`v2/lib/products.ts`](v2/lib/products.ts) (rings, specs, comparison rows, demo dishes), with every string in Chinese and English.
 
-- **Bilingual (zh / en)** — client-side language toggle with `localStorage` persistence via a React context (`LanguageProvider`)
-- **Single-page layout** — Hero, About, Solutions, Technology, Stats, Contact, Footer sections
-- **News & Insights** — static blog posts with individual `[slug]` pages
-- **Careers** — open positions page with department filtering
-- **Contact form** — API route at `/api/contact`
-
-## Project Structure
-
-```
-app/
-  page.tsx              # Home page (all sections)
-  globals.css
-  layout.tsx
-  news/
-    page.tsx            # News listing
-    [slug]/page.tsx     # Individual article
-  careers/page.tsx
-  api/contact/route.ts  # Contact form endpoint
-components/
-  Navbar.tsx
-  Hero.tsx
-  About.tsx
-  Solutions.tsx
-  Technology.tsx
-  Stats.tsx
-  Contact.tsx / ContactForm.tsx
-  Footer.tsx
-  NewsArticle.tsx
-  NeuralOrb.tsx
-  Reveal.tsx
-lib/
-  dictionary.ts         # All UI strings in zh + en
-  i18n.tsx              # LanguageProvider + useLang hook
-  data.ts               # Blog posts + job listings
-```
-
-## Getting Started
+## Develop
 
 ```bash
-npm install
-npm run dev
+cd v2 && npm install && npm run dev      # http://localhost:3000
+cd v1 && npm install && npm run dev      # http://localhost:3000/v1
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-## Available Scripts
+## Deploy
 
 ```bash
-npm run dev      # Development server
-npm run build    # Production build
-npm run start    # Start production server
-npm run lint     # ESLint
+./scripts/deploy.sh          # build + release both apps from committed HEAD
+./scripts/deploy.sh v2       # only v2
 ```
 
-## Internationalization
-
-All copy lives in [lib/dictionary.ts](lib/dictionary.ts). To add a new language, extend the `Lang` type in [lib/dictionary.ts](lib/dictionary.ts) and add a matching key to the `dictionary` object.
-
-## Contact
-
-- Email: contact@verkun.com
-- Business: bd@verkun.com
-- Address: Zhongguancun Sci-Park, Haidian, Beijing
+The script archives `HEAD`, builds on the VM in a staging directory, swaps the release in, and reloads pm2 via [`ecosystem.config.cjs`](ecosystem.config.cjs). The previous build is kept as `/opt/verkun-com/<app>.prev`.
