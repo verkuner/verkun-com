@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 # One-time setup on the VM: Postfix as a local-only relay that sends through
-# Feishu Mail (smtp.feishu.cn:465) as contact@verkun.com.
+# Feishu Mail (smtp.feishu.cn:465), signed in as the sending mailbox
+# sender@verkun.com. Contact-form leads are addressed to contact@verkun.com.
 #
-#   sudo bash setup-mail-relay.sh
+#   sudo bash setup-mail-relay.sh        # safe to re-run; keeps a stored password
 #
 # The mailbox password is NOT set here — run `sudo verkun-mail-password`
 # afterwards and type the Feishu app-specific password when prompted.
 set -euo pipefail
 
-MAILBOX="${MAILBOX:-contact@verkun.com}"
+MAILBOX="${MAILBOX:-sender@verkun.com}"  # SMTP login + envelope sender
+NOTIFY="${NOTIFY:-contact@verkun.com}"   # where the relay test mail goes
 RELAY="[smtp.feishu.cn]:465"
 
 echo "postfix postfix/main_mailer_type select Satellite system" | debconf-set-selections
@@ -51,8 +53,8 @@ postmap /etc/postfix/sasl_passwd
 chmod 600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
 systemctl reload postfix
 postqueue -f  # send anything that was waiting for the password
-printf 'Subject: VERKUN mail relay test\nFrom: $MAILBOX\nTo: $MAILBOX\n\nPostfix on the VM can send through Feishu Mail.\n' | sendmail -f $MAILBOX $MAILBOX
-echo "Saved. Test mail queued to $MAILBOX — check: sudo tail -n 20 /var/log/mail.log"
+printf 'Subject: VERKUN mail relay test\nFrom: $MAILBOX\nTo: $NOTIFY\n\nPostfix on the VM can send through Feishu Mail as $MAILBOX.\n' | sendmail -f $MAILBOX $NOTIFY
+echo "Saved. Test mail queued to $NOTIFY — check: sudo tail -n 20 /var/log/mail.log"
 EOF
 chmod 700 /usr/local/sbin/verkun-mail-password
 

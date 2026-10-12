@@ -45,9 +45,9 @@ The script archives `HEAD`, builds on the VM in a staging directory, swaps the r
 
 ## Mail (contact form)
 
-v2's `/api/contact` emails every submission to `contact@verkun.com` (Reply-To = the visitor). It hands the message to **Postfix on the VM**, listening on `127.0.0.1:25` only, which relays it through **Feishu Mail** (`smtp.feishu.cn:465`, signed in as `contact@verkun.com`). Postfix queues and retries if Feishu is unreachable. Every lead is also written to `pm2 logs verkun-v2`.
+v2's `/api/contact` emails every submission to `contact@verkun.com` (Reply-To = the visitor). It hands the message to **Postfix on the VM**, listening on `127.0.0.1:25` only, which relays it through **Feishu Mail** (`smtp.feishu.cn:465`, signed in as the sending mailbox `sender@verkun.com`). Postfix queues and retries if Feishu is unreachable. Every lead is also written to `pm2 logs verkun-v2`.
 
 - One-time server setup: `sudo bash scripts/setup-mail-relay.sh` (already done on the VM).
-- Set / rotate the Feishu app password: `sudo verkun-mail-password` (prompts; stored root-only in `/etc/postfix/sasl_passwd`).
+- Set / rotate the Feishu app password of `sender@verkun.com`: `sudo verkun-mail-password` (prompts; stored root-only in `/etc/postfix/sasl_passwd`).
 - Troubleshoot: `sudo tail -f /var/log/mail.log`, `mailq`, `sudo postqueue -f` (retry now).
 - Recipient/sender are `MAIL_TO` / `MAIL_FROM` in `ecosystem.config.cjs`. Without `MAIL_TO` (local dev) leads are only logged.

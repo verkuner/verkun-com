@@ -13,7 +13,7 @@ const TOPICS: Record<string, string> = {
 // Mail goes to the Postfix relay on the VM (127.0.0.1:25), which forwards it
 // through Feishu Mail. Without MAIL_TO (e.g. local dev) leads are only logged.
 const MAIL_TO = process.env.MAIL_TO;
-const MAIL_FROM = process.env.MAIL_FROM ?? "contact@verkun.com";
+const MAIL_FROM = process.env.MAIL_FROM ?? "sender@verkun.com";
 
 let transport: Transporter | null = null;
 function mailer() {

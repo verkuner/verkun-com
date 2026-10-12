@@ -13,7 +13,7 @@ module.exports = {
         NODE_ENV: "production",
         // Contact-form mail goes via the local Postfix relay (scripts/setup-mail-relay.sh).
         MAIL_TO: "contact@verkun.com",
-        MAIL_FROM: "contact@verkun.com",
+        MAIL_FROM: "sender@verkun.com", // the Feishu mailbox Postfix signs in as
       },
     },
     {
