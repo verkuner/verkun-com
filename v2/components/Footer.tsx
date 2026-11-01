@@ -27,6 +27,7 @@ const groups = [
     links: [
       { href: "/#contact", label: l("联系我们", "Contact us") },
       { href: "/#contact", label: l("渠道与企业合作", "Retail & B2B") },
+      { href: "https://admin.verkun.com", label: l("管理后台", "Admin") },
     ],
   },
 ];

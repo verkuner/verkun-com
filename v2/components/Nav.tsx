@@ -169,6 +169,9 @@ export default function Nav() {
           >
             {lang === "zh" ? "EN" : "中文"}
           </button>
+          <a href="https://verkun.com/console/" className="hidden rounded-full border border-line bg-white px-5 py-2 text-sm font-semibold text-ink transition-colors hover:border-teal hover:text-teal-deep sm:inline-block">
+            {tr(l("登录", "Sign in"))}
+          </a>
           <Link href="/health-radar#download" className="hidden rounded-full bg-ink px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-teal-deep sm:inline-block">
             {tr(l("下载 App", "Get the App"))}
           </Link>
@@ -220,6 +223,9 @@ export default function Nav() {
           <Link href="/health-radar#download" className="mt-4 block rounded-full bg-ink py-3 text-center font-semibold text-white">
             {tr(l("下载 App", "Get the App"))}
           </Link>
+          <a href="https://verkun.com/console/" className="mt-3 block rounded-full border border-line bg-white py-3 text-center font-semibold text-ink">
+            {tr(l("登录", "Sign in"))}
+          </a>
         </div>
       )}
     </header>
